@@ -22,8 +22,7 @@
 с кнопкой повтора
 
 Design
-https://www.figma.com/design/bAxXrk7TaPN13TZ60yf7uD/Test-Assignment?node-id=0-1&p=f&t
-=qnWbxTDbClFsVhxB-0
+https://www.figma.com/design/bAxXrk7TaPN13TZ60yf7uD/Test-Assignment?node-id=0-1&p=f&t =qnWbxTDbClFsVhxB-0
 
 API (Swagger)
 https://k8s.mectest.ru/test-app/openapi.json
