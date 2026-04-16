@@ -14,7 +14,7 @@
 	- [X]	shared/ui
 	- [X]	entities/post
 	- [X]	features/feed
-	- [ ]	Настроить QueryClientProvider
+	- [X]	Настроить QueryClientProvider
 	- [ ]	Реализовать автогенерацию типовых уков на основе сваггер конфига. 
 	- [ ]	Сделать базовый API client (axios instance + interceptors)
 	- [ ]	Подключить дизайн-токены (цвета, отступы, типографика)
@@ -22,6 +22,7 @@
 	- [ ]	Text
 	- [ ]	Button
 	- [ ]	Loader / Skeleton
+	- [ ]	Перевести схемы линтинга expo на biome
 
 ### День 2
 

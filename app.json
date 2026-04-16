@@ -1,6 +1,11 @@
 {
   "expo": {
     "name": "mecenate",
+    "scheme": "mecenate",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "slug": "mecenate",
     "version": "1.0.0",
     "orientation": "portrait",
