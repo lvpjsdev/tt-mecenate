@@ -2,13 +2,12 @@
 
 ### День 1
 
-	- [ ]	Поднять проект на Expo + TypeScript
-	- [ ]	Установить:
-    - [ ]   Линтер и прекамитхук
-	- [ ]	React Navigation
-	- [ ]	TanStack Query
-	- [ ]	MobX
-	- [ ]	Axios
+	- [X]	Поднять проект на Expo + TypeScript
+    - [X]   Линтер и прекамитхук
+	- [X]	React Navigation
+	- [X]	TanStack Query
+	- [X]	MobX
+	- [X]	Axios
 	- [ ]	Настроить базовую структуру:
 	- [ ]	app/ (navigation)
 	- [ ]	shared/api
@@ -16,6 +15,7 @@
 	- [ ]	entities/post
 	- [ ]	features/feed
 	- [ ]	Настроить QueryClientProvider
+	- [ ]	Реализовать автогенерацию типовых уков на основе сваггер конфига. 
 	- [ ]	Сделать базовый API client (axios instance + interceptors)
 	- [ ]	Подключить дизайн-токены (цвета, отступы, типографика)
 	- [ ]	Сделать базовые UI-компоненты:
@@ -53,4 +53,5 @@
 	- [ ]	keyExtractor
 	- [ ]	memo для item
 	- [ ]	Мини-полишинг UI под Figma
+	- [ ]	Добавить третий кран как витрину UI компонентов. 
 
