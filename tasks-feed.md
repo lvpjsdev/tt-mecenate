@@ -8,12 +8,12 @@
 	- [X]	TanStack Query
 	- [X]	MobX
 	- [X]	Axios
-	- [ ]	Настроить базовую структуру:
-	- [ ]	app/ (navigation)
-	- [ ]	shared/api
-	- [ ]	shared/ui
-	- [ ]	entities/post
-	- [ ]	features/feed
+	- [X]	Настроить базовую структуру:
+	- [X]	app/ (navigation)
+	- [X]	shared/api
+	- [X]	shared/ui
+	- [X]	entities/post
+	- [X]	features/feed
 	- [ ]	Настроить QueryClientProvider
 	- [ ]	Реализовать автогенерацию типовых уков на основе сваггер конфига. 
 	- [ ]	Сделать базовый API client (axios instance + interceptors)
