@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { usePosts } from './model/usePosts';
 
 const PostsScreen = () => {
-  const { data, isLoading: loading, isError, error: queryError } = usePosts();
+  const { data, isLoading: loading, isError, error: queryError, fetchNextPage } = usePosts();
 
   const error = isError ? ((queryError as Error)?.message ?? 'Unknown error') : null;
 
@@ -34,6 +34,11 @@ const PostsScreen = () => {
             <Text style={styles.body}>{item.body}</Text>
           </View>
         )}
+        onEndReached={() => {
+          if (loading || isError) return;
+          fetchNextPage();
+        }}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );

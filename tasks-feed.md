@@ -27,7 +27,7 @@
 ### День 2
 
     - [X]	Реализовать useInfiniteQuery для постов
-	- [ ]	Настроить cursor-based пагинацию
+	- [X]	Настроить cursor-based пагинацию
 	- [ ]	Сделать экран Feed:
 	- [ ]	FlatList
 	- [ ]	Карточка поста (author, preview, image, stats)
