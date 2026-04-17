@@ -1,7 +1,12 @@
 // TODO: При выпуске финального релиза заменить на экспорт шрифтов через Expo Config Plugin
-
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
-import { SpaceMono_400Regular, useFonts } from '@expo-google-fonts/dev';
+import {
+  Manrope_400Regular,
+  Manrope_500Medium,
+  Manrope_600SemiBold,
+  Manrope_700Bold,
+  useFonts,
+} from '@expo-google-fonts/dev';
 import NetInfo from '@react-native-community/netinfo';
 import {
   focusManager,
@@ -9,9 +14,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { AppState, type AppStateStatus } from 'react-native';
+import { ErrorBoundary } from 'react-error-boundary';
+import { AppState, type AppStateStatus, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeProvider } from '@/core/theme/ThemeProvider';
+import { Button, Text } from '@/shared/ui';
 
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {
@@ -28,6 +37,9 @@ const queryClient = new QueryClient({
       staleTime: 1000 * 60 * 5, // 5 minutes
       retry: 3,
     },
+    mutations: {
+      retry: 1,
+    },
   },
 });
 
@@ -35,7 +47,10 @@ export default function RootLayout() {
   useReactQueryDevTools(queryClient);
 
   const [loaded] = useFonts({
-    SpaceMono_400Regular,
+    Manrope_400Regular,
+    Manrope_500Medium,
+    Manrope_600SemiBold,
+    Manrope_700Bold,
   });
 
   useEffect(() => {
@@ -48,10 +63,25 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-      </Stack>
-    </QueryClientProvider>
+    <ErrorBoundary
+      fallbackRender={({ resetErrorBoundary }) => {
+        return (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text variant="label">Something went wrong</Text>
+            <Button label="Retry" onPress={resetErrorBoundary} />
+          </View>
+        );
+      }}
+    >
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Slot />
+            </Stack>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }

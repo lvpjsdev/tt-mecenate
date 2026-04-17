@@ -2,10 +2,7 @@
   "expo": {
     "name": "mecenate",
     "scheme": "mecenate",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "slug": "mecenate",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -31,9 +28,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ]
+    "plugins": ["expo-router", "expo-font"]
   }
 }
