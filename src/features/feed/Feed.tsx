@@ -1,8 +1,13 @@
-import React, { useCallback } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import React, { useCallback, useRef } from 'react';
 import { FlatList, StyleSheet, Text, View, type ViewToken } from 'react-native';
+import { getPosts } from '@/shared/api/generated/posts/posts';
 import { usePosts } from './model/usePosts';
 
 const PostsScreen = () => {
+  const isRefreshingRef = useRef(false);
+  const isFetchingMoreRef = useRef(false);
+  const queryClient = useQueryClient();
   const {
     data,
     isLoading,
@@ -29,6 +34,30 @@ const PostsScreen = () => {
     [posts.length, hasNextPage, isFetchingNextPage, fetchNextPage],
   );
 
+  const onRefresh = useCallback(async () => {
+    if (isRefreshingRef.current) return;
+
+    isRefreshingRef.current = true;
+
+    try {
+      const firstPage = await queryClient.fetchQuery({
+        queryKey: ['posts', { cursor: '' }],
+        queryFn: () => getPosts({ cursor: '' }),
+      });
+
+      queryClient.setQueryData(['posts'], (old: any) => {
+        if (!old) return old;
+
+        return {
+          ...old,
+          pages: [firstPage, ...old.pages.slice(1)],
+        };
+      });
+    } finally {
+      isRefreshingRef.current = false;
+    }
+  }, [queryClient, queryClient.fetchQuery]);
+
   if (isLoading) {
     return (
       <View style={styles.center}>
@@ -53,6 +82,18 @@ const PostsScreen = () => {
     );
   }
 
+  const fetchNext = async () => {
+    if (isFetchingMoreRef.current || isRefreshingRef.current || !hasNextPage) return;
+
+    isFetchingMoreRef.current = true;
+
+    try {
+      await fetchNextPage();
+    } finally {
+      isFetchingMoreRef.current = false;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -64,12 +105,11 @@ const PostsScreen = () => {
             <Text style={styles.body}>{item.body}</Text>
           </View>
         )}
+        refreshing={isRefreshingRef.current}
+        onRefresh={onRefresh}
+        onEndReached={fetchNext}
         //TODO: добавить onMomentumScrollBegin
         onViewableItemsChanged={onViewableItemsChanged}
-        onEndReached={() => {
-          if (isFetchingNextPage || !hasNextPage) return;
-          fetchNextPage();
-        }}
         onEndReachedThreshold={0.5}
         ListFooterComponent={
           isFetchingNextPage ? (
