@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ActivityIndicator, Pressable, View } from 'react-native';
-import { useTheme } from '../../../styles/ThemeContext';
-import { Text } from '../../atoms/Text';
+import { useTheme } from '@/core/theme/ThemeProvider';
+import { Text } from '@/shared/ui/Text';
 import { stylesheet } from './Button.styles';
 import type { ButtonProps, ButtonState } from './Button.types';
 

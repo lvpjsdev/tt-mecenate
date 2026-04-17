@@ -26,7 +26,7 @@
 
 ### День 2
 
-    - [ ]	Реализовать useInfiniteQuery для постов
+    - [X]	Реализовать useInfiniteQuery для постов
 	- [ ]	Настроить cursor-based пагинацию
 	- [ ]	Сделать экран Feed:
 	- [ ]	FlatList
@@ -56,3 +56,17 @@
 	- [ ]	Мини-полишинг UI под Figma
 	- [ ]	Добавить третий кран как витрину UI компонентов. 
 
+
+MUST HAVE:
+	•	React Query data layer
+	•	optimistic like
+	•	WebSocket updates
+	•	retry + backoff + jitter (минимально)
+	•	error classification
+
+⸻
+
+NICE TO HAVE:
+	•	mutation queue (простая версия)
+	•	connection state (MobX)
+	•	selectors

@@ -1,5 +1,8 @@
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
+import { tokens } from '../../styles/theme';
+// Now import the component
+import { Button } from './Button';
 
 // Mock React hooks - properly maintain state
 let mockPressState = 'default';
@@ -66,10 +69,6 @@ vi.mock('../../../styles/ThemeContext', () => {
     ThemeProvider: ({ children }: { children?: unknown }) => children,
   };
 });
-
-import { tokens } from '../../../styles/theme';
-// Now import the component
-import { Button } from './Button';
 
 // Use tokens directly for assertions (same values as mock theme)
 const theme = tokens;

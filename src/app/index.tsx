@@ -1,12 +1,10 @@
-import { Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import PostsScreen from '@/features/feed/Feed';
 
 export default function FeedScreen() {
   return (
-    <SafeAreaView
-      style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}
-    >
-      <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'black' }}>Feed</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <PostsScreen />
     </SafeAreaView>
   );
 }

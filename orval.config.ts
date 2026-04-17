@@ -5,17 +5,16 @@ export default defineConfig({
     input: './openapi.json',
     output: {
       target: './src/shared/api/generated',
-      client: 'axios',
+      client: 'axios-functions',
       mode: 'tags-split',
       tsconfig: './tsconfig.json',
       clean: true,
       override: {
         mutator: {
           path: './src/shared/api/client.ts',
-          name: 'customInstance',
+          name: 'customClient',
         },
       },
-      formatter: 'biome',
     },
   },
 });

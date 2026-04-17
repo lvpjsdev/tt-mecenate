@@ -14,7 +14,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { Slot, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AppState, type AppStateStatus, View } from 'react-native';
@@ -76,9 +76,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Slot />
-            </Stack>
+            <Stack screenOptions={{ headerShown: false }} />
           </QueryClientProvider>
         </ThemeProvider>
       </SafeAreaProvider>

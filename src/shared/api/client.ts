@@ -25,16 +25,26 @@ apiClient.interceptors.response.use(
   },
 );
 
-export const customInstance = async <T>(
+type ApiResponse<T> = { ok?: boolean; data?: T };
+
+export const customClient = async <TResponse extends ApiResponse<unknown>>(
   config: AxiosRequestConfig,
-  options?: AxiosRequestConfig,
-): Promise<T> => {
-  const { data } = await apiClient({
-    ...config,
-    ...options,
-  });
-  return data;
+): Promise<NonNullable<TResponse['data']>> => {
+  const response = await apiClient<TResponse>(config);
+
+  return response.data.data as NonNullable<TResponse['data']>;
 };
 
-export type ErrorType<Error> = AxiosError<Error>;
-export type BodyType<BodyData> = BodyData;
+// export const customInstance = async <T>(
+//   config: AxiosRequestConfig,
+//   options?: AxiosRequestConfig,
+// ): Promise<T> => {
+//   const { data } = await apiClient({
+//     ...config,
+//     ...options,
+//   });
+//   return data?.data ?? data;
+// };
+
+// export type ErrorType<Error> = AxiosError<Error>;
+// export type BodyType<BodyData> = BodyData;

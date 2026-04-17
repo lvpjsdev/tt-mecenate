@@ -1,4 +1,12 @@
 export const theme = {
+  states: {
+    primary: {
+      default: { background: '#6115cd', text: '#ffffff', icon: '#ffffff' },
+      hover: { background: '#4e11a4', text: '#ffffff', icon: '#ffffff' },
+      pressed: { background: '#3a0d7b', text: '#ffffff', icon: '#ffffff' },
+      disabled: { background: '#d5c9ff', text: '#ffffff', icon: '#ffffff' },
+    },
+  },
   colors: {
     primary: {
       default: '#6115cd',

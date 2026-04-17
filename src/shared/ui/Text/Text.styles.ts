@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Fonts } from '../../../styles/fonts';
-import { theme } from '../../../styles/theme';
+import { Fonts } from '../../styles/fonts';
+import { theme } from '../../styles/theme';
 
 export const stylesheet = StyleSheet.create({
   label: {
