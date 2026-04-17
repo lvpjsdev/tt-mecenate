@@ -3,5 +3,6 @@ pre-commit:
   commands:
     biome-check:
       glob: "*.{ts,tsx,js,jsx}"
-      run: npx biome check --write {staged_files}
-      stage_fixed: true
+      run: npx biome check {staged_files}
+    typecheck:
+      run: npx tsc --noEmit

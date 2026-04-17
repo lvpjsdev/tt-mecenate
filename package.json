@@ -10,6 +10,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
     "generate-api": "orval --config orval.config.ts"
   },
   "dependencies": {

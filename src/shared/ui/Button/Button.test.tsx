@@ -15,7 +15,7 @@ vi.mock('react', () => ({
     // Return current mock state if set, otherwise initial
     return [mockPressState || initial, mockSetPressState];
   }),
-  useCallback: (fn) => fn,
+  useCallback: (fn: (...args: unknown[]) => unknown) => fn,
   createContext: (defaultValue: unknown) => ({ _defaultValue: defaultValue }),
   useContext: (ctx: { _defaultValue: unknown }) => ctx._defaultValue,
 }));

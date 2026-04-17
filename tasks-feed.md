@@ -28,8 +28,8 @@
 
     - [X]	Реализовать useInfiniteQuery для постов
 	- [X]	Настроить cursor-based пагинацию
-	- [ ]	Сделать экран Feed:
-	- [ ]	FlatList
+	- [X]	Сделать экран Feed:
+	- [X]	FlatList
 	- [ ]	Карточка поста (author, preview, image, stats)
 	- [ ]	Реализовать:
 	- [ ]	infinite scroll (onEndReached)

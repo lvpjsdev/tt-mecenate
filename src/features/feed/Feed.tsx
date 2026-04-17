@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { usePosts } from './model/usePosts';
 
 const PostsScreen = () => {
-  const { data, isLoading: loading, isError, error: queryError, fetchNextPage } = usePosts();
+  const {
+    data,
+    isLoading,
+    error: queryError,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = usePosts();
 
-  const error = isError ? ((queryError as Error)?.message ?? 'Unknown error') : null;
+  const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
 
-  if (loading) {
+  const errorMessage = queryError instanceof Error ? queryError.message : 'Unknown error';
+
+  if (isLoading) {
     return (
       <View style={styles.center}>
         <Text>Loading...</Text>
@@ -15,10 +24,18 @@ const PostsScreen = () => {
     );
   }
 
-  if (error) {
+  if (errorMessage) {
     return (
       <View style={styles.center}>
-        <Text>Error: {error}</Text>
+        <Text>Error: {errorMessage}</Text>
+      </View>
+    );
+  }
+
+  if (!posts.length) {
+    return (
+      <View style={styles.center}>
+        <Text>No posts</Text>
       </View>
     );
   }
@@ -26,19 +43,27 @@ const PostsScreen = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data?.posts}
-        keyExtractor={(item) => item.id ?? ''}
+        data={posts}
+        keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
           <View style={styles.item}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.body}>{item.body}</Text>
           </View>
         )}
+        //TODO: добавить onMomentumScrollBegin
         onEndReached={() => {
-          if (loading || isError) return;
+          if (isFetchingNextPage || !hasNextPage) return;
           fetchNextPage();
         }}
         onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <View style={styles.center}>
+              <Text>Loading more...</Text>
+            </View>
+          ) : null
+        }
       />
     </View>
   );
