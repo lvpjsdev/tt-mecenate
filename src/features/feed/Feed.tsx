@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatList, StyleSheet, Text, View, type ViewToken } from 'react-native';
 import { usePosts } from './model/usePosts';
 
 const PostsScreen = () => {
@@ -15,6 +15,19 @@ const PostsScreen = () => {
   const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
 
   const errorMessage = queryError instanceof Error ? queryError.message : 'Unknown error';
+
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems?: ViewToken[] }) => {
+      const lastIndex = viewableItems?.at(-1)?.index ?? 0;
+
+      const shouldPrefetch = lastIndex >= posts.length - 5;
+
+      if (shouldPrefetch && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [posts.length, hasNextPage, isFetchingNextPage, fetchNextPage],
+  );
 
   if (isLoading) {
     return (
@@ -52,6 +65,7 @@ const PostsScreen = () => {
           </View>
         )}
         //TODO: добавить onMomentumScrollBegin
+        onViewableItemsChanged={onViewableItemsChanged}
         onEndReached={() => {
           if (isFetchingNextPage || !hasNextPage) return;
           fetchNextPage();
