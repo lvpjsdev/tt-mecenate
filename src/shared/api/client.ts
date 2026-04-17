@@ -25,14 +25,15 @@ apiClient.interceptors.response.use(
   },
 );
 
-export const customInstance = <T>(
+export const customInstance = async <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig,
 ): Promise<T> => {
-  return apiClient({
+  const { data } = await apiClient({
     ...config,
     ...options,
-  }).then(({ data }) => data);
+  });
+  return data;
 };
 
 export type ErrorType<Error> = AxiosError<Error>;
