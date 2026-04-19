@@ -1,5 +1,5 @@
 import { createContext, type FC, type ReactNode, useContext } from 'react';
-import { theme } from './theme';
+import { theme } from '@/shared/styles/theme';
 
 const ThemeContext = createContext(theme);
 
