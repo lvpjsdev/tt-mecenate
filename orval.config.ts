@@ -10,11 +10,20 @@ export default defineConfig({
       tsconfig: './tsconfig.json',
       clean: true,
       override: {
+        components: {
+          schemas: {
+            suffix: 'DTO',
+          },
+        },
         mutator: {
           path: './src/shared/api/client.ts',
           name: 'customClient',
         },
       },
+    },
+    // Хак для того что бы Typescript считал файл модулем
+    hooks: {
+      afterAllFilesWrite: 'node scripts/patch-generated-schemas.mjs',
     },
   },
 });
