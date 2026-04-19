@@ -1,13 +1,19 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { mapPost } from '@/entities/post/model/apiMapper';
 import { getPosts } from '@/shared/api/generated/posts/posts';
 
 export const usePosts = () => {
   return useInfiniteQuery({
     queryKey: ['posts'],
     initialPageParam: '',
-    queryFn: ({ pageParam }) => getPosts({ cursor: pageParam }),
+    queryFn: async ({ pageParam }) => {
+      const response = await getPosts({ cursor: pageParam });
+
+      return {
+        ...response,
+        posts: response.posts?.map(mapPost) ?? [],
+      };
+    },
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-    retry: 3,
-    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000) + Math.random() * 300,
   });
 };
