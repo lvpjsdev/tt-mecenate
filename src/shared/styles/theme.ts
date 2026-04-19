@@ -43,6 +43,10 @@ export const theme = {
       disabled: '#b6bec8',
       active: '#ff2b75',
     },
+    skeleton: {
+      base: '#eeeff1',
+      highlight: '#f8f8f8',
+    },
   },
   typography: {
     fontFamily: {
