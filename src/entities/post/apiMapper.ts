@@ -1,0 +1,15 @@
+import type { Post } from '@/entities/post/types';
+import type * as API from '@/shared/api/generated/mecenateTestAPI.schemas';
+
+export const mapPost = (dto: API.PostDTO): Post => ({
+  id: dto.id!,
+  authorName: dto.author?.displayName || dto.author?.username || '',
+  avatarUrl: dto.author?.avatarUrl,
+  title: dto.title,
+  preview: dto.preview ?? dto.body?.slice(0, 140) ?? '',
+  coverUrl: dto.coverUrl,
+  likes: dto.likesCount ?? 0,
+  comments: dto.commentsCount ?? 0,
+  isLiked: dto.isLiked,
+  isPaid: dto.tier === 'paid',
+});

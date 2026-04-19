@@ -1,0 +1,23 @@
+import { Image } from 'expo-image';
+import { theme } from '../../styles/theme';
+import type { AvatarProps } from './Avatar.types';
+
+const DEFAULT_SIZE = 40;
+
+export function Avatar({ uri, size = DEFAULT_SIZE, placeholder, testID }: AvatarProps) {
+  return (
+    <Image
+      source={{ uri }}
+      placeholder={placeholder}
+      contentFit="cover"
+      testID={testID}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: theme.borderRadius.full,
+      }}
+    />
+  );
+}
+
+Avatar.displayName = 'Avatar';
