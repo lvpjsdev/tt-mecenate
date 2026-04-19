@@ -176,6 +176,10 @@
     ]
   },
   "overrides": [
+    {
+      "includes": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "linter": { "rules": { "nursery": { "useImportsFirst": "off" } } }
+    },
     { "includes": ["**/*.d.ts"], "linter": { "rules": {} } },
     { "includes": ["**/metro.config.js"], "javascript": { "globals": ["exports"] } },
     { "includes": ["**/*.js", "**/*.jsx"] },

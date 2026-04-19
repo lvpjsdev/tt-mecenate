@@ -1,9 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { usePosts } from '../model/usePosts';
 import { PostCard, PostCardSkeleton } from '@/entities/post/ui';
-import { isNearBottom } from './utils'
+import { usePosts } from '../model/usePosts';
+import { isNearBottom } from './utils';
 
 const PostsScreen = () => {
   const queryClient = useQueryClient();
@@ -20,8 +20,8 @@ const PostsScreen = () => {
   const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
 
   const onRefresh = useCallback(async () => {
-    queryClient.cancelQueries({queryKey: ['posts']});
-    queryClient.invalidateQueries({queryKey: ['posts']});
+    queryClient.cancelQueries({ queryKey: ['posts'] });
+    queryClient.invalidateQueries({ queryKey: ['posts'] });
   }, [queryClient]);
 
   if (isLoading) {
@@ -60,22 +60,14 @@ const PostsScreen = () => {
       <FlatList
         data={posts}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => (
-          <PostCard
-              post={item}
-          />
-        )}
-        onScroll={(e)=>{
+        renderItem={({ item }) => <PostCard post={item} />}
+        onScroll={(e) => {
           if (!isNearBottom(e)) return;
           fetchNext();
         }}
         refreshing={isRefetching}
         onRefresh={onRefresh}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <PostCardSkeleton/>
-          ) : null
-        }
+        ListFooterComponent={isFetchingNextPage ? <PostCardSkeleton /> : null}
       />
     </View>
   );

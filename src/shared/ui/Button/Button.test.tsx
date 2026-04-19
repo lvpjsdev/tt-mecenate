@@ -1,6 +1,6 @@
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
-import { tokens } from '../../styles/theme';
+import { theme } from '../../styles/theme';
 // Now import the component
 import { Button } from './Button';
 
@@ -70,8 +70,7 @@ vi.mock('../../../styles/ThemeContext', () => {
   };
 });
 
-// Use tokens directly for assertions (same values as mock theme)
-const theme = tokens;
+// Use theme directly for assertions (same values as mock theme)
 
 describe('Button Component', () => {
   describe('Rendering in each state (Requirements 18.1)', () => {

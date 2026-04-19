@@ -1,4 +1,4 @@
-import type { Post } from '@/entities/post/types';
+import type { Post } from '@/entities/post/model/types';
 import type * as API from '@/shared/api/generated/mecenateTestAPI.schemas';
 
 export const mapPost = (dto: API.PostDTO): Post => ({

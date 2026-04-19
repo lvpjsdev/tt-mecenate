@@ -6,8 +6,8 @@ import type { LayoutChangeEvent, NativeSyntheticEvent, TextLayoutEventData } fro
 import { Text as RNText, View } from 'react-native';
 import { theme } from '@/shared/styles/theme';
 import { ActionButton, Avatar, Button, LinkButton, Text } from '@/shared/ui';
-import type { Post } from '../types';
-import { BODY_LINE_HEIGHT, stylesheet } from './PostCard.styles';
+import type { Post } from '../model/types';
+import { stylesheet } from './PostCard.styles';
 
 export interface PostCardProps {
   post: Post;
