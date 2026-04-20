@@ -45,6 +45,7 @@ export const lightTheme = {
       tertiary: tokens.palette.neutral[100],
       hover: tokens.palette.neutral[200],
       disabled: tokens.palette.neutral[300],
+      feed: tokens.palette.neutral[50],
     },
     text: {
       primary: tokens.palette.neutral[1000],

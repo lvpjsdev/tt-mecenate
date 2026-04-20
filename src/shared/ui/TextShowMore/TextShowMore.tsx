@@ -53,7 +53,7 @@ export function TextShowMore({
       {showExpandButton ? (
         <>
           <LinearGradient
-            colors={['transparent', theme.colors.background.default]}
+            colors={[`${theme.colors.background.default}00`, theme.colors.background.default]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={[stylesheet.gradient, { right: btnWidth }]}
@@ -62,7 +62,7 @@ export function TextShowMore({
           <LinkButton
             label={showMoreLabel}
             onPress={() => setIsExpanded(true)}
-            style={stylesheet.button}
+            style={[stylesheet.button, { backgroundColor: theme.colors.background.default }]}
             onLayout={handleBtnLayout}
           />
         </>

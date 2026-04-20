@@ -15,7 +15,6 @@ export const stylesheet = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: tokens.palette.neutral[0],
   },
   gradient: {
     position: 'absolute',

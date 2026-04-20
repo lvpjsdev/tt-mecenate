@@ -14,6 +14,7 @@ export const tokens = {
     },
     neutral: {
       0: '#ffffff',
+      50: '#f5f8fd',
       100: '#f3f3f3',
       150: '#eff2f7',
       200: '#e6e9ef',

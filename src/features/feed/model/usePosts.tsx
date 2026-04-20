@@ -28,8 +28,7 @@ export const usePosts = () => {
   };
 
   const fetchNext = () => {
-    const canFetch = query.hasNextPage && !query.isFetchingNextPage && networkStore.isOnline;
-
+    const canFetch = query.hasNextPage && !query.isFetchingNextPage;
     if (canFetch) query.fetchNextPage();
   };
 

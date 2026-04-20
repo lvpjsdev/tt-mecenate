@@ -4,7 +4,7 @@ import { tokens } from '../../styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   label: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.semibold,
     fontSize: tokens.fontSize.base,
     lineHeight: tokens.fontSize.base * tokens.lineHeight.tight,
     letterSpacing: tokens.letterSpacing.tight,

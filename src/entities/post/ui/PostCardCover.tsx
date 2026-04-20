@@ -1,8 +1,10 @@
 import { Image } from 'expo-image';
+import { useState } from 'react';
 import { Text as RNText, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
+import { tokens } from '@/shared/styles/tokens';
 import { Button } from '@/shared/ui';
-import { ICON_SIZE, Icon } from '@/shared/ui/Icon';
+import { Icon } from '@/shared/ui/Icon';
 import { stylesheet } from './PostCard.styles';
 
 interface PostCardCoverProps {
@@ -20,15 +22,14 @@ export function PostCardCover({ coverUrl, isLocked, onDonate }: PostCardCoverPro
         source={{ uri: coverUrl }}
         contentFit="cover"
         blurRadius={isLocked ? 35 : 0}
-        style={stylesheet.coverImage}
+        transition={300}
+        style={[stylesheet.coverImage, { backgroundColor: tokens.palette.skeleton.base }]}
       />
       {isLocked ? (
         <View style={stylesheet.lockedCoverOverlay} pointerEvents="box-none">
           <View style={stylesheet.lockedContent}>
             <View style={stylesheet.lockedIconWrapper}>
-              <View style={stylesheet.lockedIconCircle}>
-                <Icon name="donate" size={ICON_SIZE.sm} color={theme.colors.primary.default} />
-              </View>
+              <Icon name="donate" size={30} color={theme.colors.primary.default} />
             </View>
             <View style={stylesheet.lockedTextAndButton}>
               <RNText style={stylesheet.lockedMessageText}>

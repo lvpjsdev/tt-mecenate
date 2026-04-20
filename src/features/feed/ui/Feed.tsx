@@ -7,7 +7,6 @@ import { usePosts } from '../model/usePosts';
 import { FeedEmpty } from './FeedEmpty';
 import { FeedError } from './FeedError';
 import { FeedListFooter } from './FeedListFooter';
-import { FeedLoader } from './FeedLoader';
 import { FeedSkeleton } from './FeedSkeleton';
 
 export function FeedScreen() {
@@ -33,7 +32,6 @@ export function FeedScreen() {
 
   return (
     <View style={styles.container}>
-      {isRefetching && data && <FeedLoader paddingVertical={8} />}
       <FlatList
         data={posts}
         keyExtractor={(item) => String(item.id)}
@@ -59,7 +57,7 @@ export function FeedScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: tokens.palette.neutral[0],
+    backgroundColor: tokens.palette.neutral[50],
   },
   listGap: {
     height: tokens.spacing.xl,

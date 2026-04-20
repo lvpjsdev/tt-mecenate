@@ -10,11 +10,13 @@ export function Avatar({ uri, size = DEFAULT_SIZE, placeholder, testID }: Avatar
       source={{ uri }}
       placeholder={placeholder}
       contentFit="cover"
+      transition={200}
       testID={testID}
       style={{
         width: size,
         height: size,
         borderRadius: tokens.borderRadius.full,
+        backgroundColor: tokens.palette.skeleton.base,
       }}
     />
   );

@@ -38,7 +38,7 @@ export function ActionButton({ type, count, active, disabled, onPress }: ActionB
   return (
     <Pressable onPress={handlePress} style={[stylesheet.pill, { backgroundColor }]}>
       <View style={stylesheet.row}>
-        <Icon name={iconName} size={ICON_SIZE.sm} color={contentColor} />
+        <Icon name={iconName} size={ICON_SIZE.md} color={contentColor} />
         <Text variant="symbol" color={contentColor}>
           {String(count)}
         </Text>
