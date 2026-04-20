@@ -1,7 +1,7 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-  petstore: {
+  mecenate: {
     input: './openapi.json',
     output: {
       target: './src/shared/api/generated',

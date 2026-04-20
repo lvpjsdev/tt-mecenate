@@ -15,5 +15,3 @@ export function Text({ variant, children, color, numberOfLines, onTextLayout }: 
     </RNText>
   );
 }
-
-Text.displayName = 'Text';

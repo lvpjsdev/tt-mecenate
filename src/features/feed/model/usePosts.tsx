@@ -1,10 +1,14 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { InfiniteData, useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 import { networkStore } from '@/core/stores/network.store';
-import { mapPost } from '@/entities/post/model/apiMapper';
+import { mapPost } from '@/entities/post/model/post.mapper';
 import { getPosts } from '@/shared/api/generated/posts/posts';
+import { type UIError } from '@/shared/ui/uiErrors';
+import { type PostPage } from './types';
 
 export const usePosts = () => {
-  const query = useInfiniteQuery({
+  const queryClient = useQueryClient();
+  const query = useInfiniteQuery<PostPage, UIError, InfiniteData<PostPage>, string[], string>({
     queryKey: ['posts'],
     initialPageParam: '',
     queryFn: async ({ pageParam }) => {
@@ -30,9 +34,15 @@ export const usePosts = () => {
     if (canFetch) query.fetchNextPage();
   };
 
+  const refresh = useCallback(() => {
+    queryClient.cancelQueries({ queryKey: ['posts'] });
+    queryClient.invalidateQueries({ queryKey: ['posts'] });
+  }, [queryClient]);
+
   return {
     query,
     retry,
     fetchNext,
+    refresh,
   };
 };

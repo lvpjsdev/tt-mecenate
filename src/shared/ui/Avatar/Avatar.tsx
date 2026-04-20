@@ -19,5 +19,3 @@ export function Avatar({ uri, size = DEFAULT_SIZE, placeholder, testID }: Avatar
     />
   );
 }
-
-Avatar.displayName = 'Avatar';

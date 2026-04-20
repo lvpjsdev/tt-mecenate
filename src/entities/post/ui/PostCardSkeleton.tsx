@@ -58,7 +58,6 @@ function SkeletonBox({
 export function PostCardSkeleton() {
   return (
     <View style={styles.card}>
-      {/* Header: аватар + имя */}
       <View style={styles.header}>
         <SkeletonBox width={40} height={40} borderRadius={tokens.borderRadius.full} />
         <SkeletonBox width={120} height={20} />
@@ -68,13 +67,11 @@ export function PostCardSkeleton() {
         <SkeletonBox width={'100%'} height={393} borderRadius={0} />
       </View>
 
-      {/* Body: заголовок + строка текста */}
       <View style={styles.body}>
         <SkeletonBox width={164} height={26} />
         <SkeletonBox width={'100%'} height={20} />
       </View>
 
-      {/* Actions: две кнопки */}
       <View style={styles.actions}>
         <SkeletonBox width={64} height={36} />
         <SkeletonBox width={64} height={36} />
@@ -82,8 +79,6 @@ export function PostCardSkeleton() {
     </View>
   );
 }
-
-PostCardSkeleton.displayName = 'PostCardSkeleton';
 
 const styles = StyleSheet.create({
   card: {

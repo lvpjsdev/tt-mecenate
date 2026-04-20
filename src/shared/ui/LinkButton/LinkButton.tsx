@@ -25,5 +25,3 @@ export function LinkButton({ label, disabled, onPress, style, onLayout }: LinkBu
     </Pressable>
   );
 }
-
-LinkButton.displayName = 'LinkButton';

@@ -1,4 +1,5 @@
-import Axios, { type AxiosError, type AxiosRequestConfig } from 'axios';
+import Axios, { type AxiosRequestConfig } from 'axios';
+import { normalizeError } from '../ui/uiErrors';
 
 export const apiClient = Axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -19,10 +20,9 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    //TODO: сюда добавить нормализацию ошибок
-    console.error('API Error:', error);
+    const normalError = normalizeError(error);
 
-    return Promise.reject(error);
+    return Promise.reject(normalError);
   },
 );
 

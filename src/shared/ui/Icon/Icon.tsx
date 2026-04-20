@@ -6,5 +6,3 @@ export function Icon({ name, size = ICON_SIZE.md, color = '#000000' }: IconProps
 
   return <SvgComponent width={size} height={size} fill={color} />;
 }
-
-Icon.displayName = 'Icon';

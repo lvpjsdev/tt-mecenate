@@ -39,5 +39,3 @@ export function EmptyState({ title, description, illustration, action }: EmptySt
     </View>
   );
 }
-
-EmptyState.displayName = 'EmptyState';

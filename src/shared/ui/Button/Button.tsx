@@ -53,5 +53,3 @@ export function Button({ label, state: externalState = 'default', onPress }: But
     </Pressable>
   );
 }
-
-Button.displayName = 'Button';

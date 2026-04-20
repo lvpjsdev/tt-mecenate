@@ -24,6 +24,7 @@ const getTheme = (mode: ThemeMode): AppTheme => {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+//Пока тема только одна, реализовал сразу на будущее
 export const ThemeProvider: FC<Props> = ({ mode = 'light', children }) => {
   const [themeMode, setMode] = useState(mode);
 

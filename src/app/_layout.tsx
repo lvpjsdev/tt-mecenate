@@ -7,30 +7,33 @@ import {
   Manrope_700Bold,
   useFonts,
 } from '@expo-google-fonts/dev';
-import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { AppState, type AppStateStatus } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { setupReactions } from '@/core/stores/reactions';
 import { ThemeProvider } from '@/core/theme/ThemeProvider';
+import { getRetryDelay } from '@/core/utils';
 import { EmptyState } from '@/shared/ui/EmptyState';
 
-const onChangeAppState = (appStatus: AppStateStatus) =>
-  focusManager.setFocused(appStatus === 'active');
+const QUERY_STALE_TIME_MS = 1000 * 60 * 5; // 5 minutes
+const QUERY_RETRY_COUNT = 3;
+const MUTATION_RETRY_COUNT = 1;
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,
-      retry: 3,
-      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000) + Math.random() * 300,
+      staleTime: QUERY_STALE_TIME_MS,
+      retry: QUERY_RETRY_COUNT,
+      retryDelay: getRetryDelay,
     },
     mutations: {
-      retry: 1,
+      retry: MUTATION_RETRY_COUNT,
     },
   },
 });
+
+setupReactions();
 
 export default function RootLayout() {
   useReactQueryDevTools(queryClient);
@@ -41,11 +44,6 @@ export default function RootLayout() {
     Manrope_600SemiBold,
     Manrope_700Bold,
   });
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', onChangeAppState);
-    return () => subscription?.remove();
-  }, []);
 
   if (!loaded) {
     return null;

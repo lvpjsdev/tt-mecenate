@@ -42,6 +42,5 @@ yarn-error.*
 
 .env*
 !.env.example
-**/generated
 .kiro
 .vscode
