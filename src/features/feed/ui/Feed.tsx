@@ -1,20 +1,18 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { PostCard, PostCardSkeleton } from '@/entities/post/ui';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { PostCard } from '@/entities/post/ui';
+import { tokens } from '@/shared/styles/tokens';
+import { EmptyState } from '@/shared/ui';
 import { usePosts } from '../model/usePosts';
 import { isNearBottom } from './utils';
 
 const PostsScreen = () => {
   const queryClient = useQueryClient();
   const {
-    data,
-    isLoading,
-    error: queryError,
-    fetchNextPage,
-    isFetchingNextPage,
-    isRefetching,
-    hasNextPage,
+    query: { data, isRefetching, hasNextPage, error },
+    retry,
+    fetchNext,
   } = usePosts();
 
   const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
@@ -24,36 +22,33 @@ const PostsScreen = () => {
     queryClient.invalidateQueries({ queryKey: ['posts'] });
   }, [queryClient]);
 
-  if (isLoading) {
+  if (error && !data) {
     return (
       <View style={styles.center}>
-        <Text>Loading...</Text>
+        <EmptyState
+          title="Не удалось загрузить страницу"
+          action={{
+            label: 'Повторить',
+            onPress: retry,
+          }}
+        />
       </View>
     );
   }
 
-  if (queryError) {
-    const errorMessage = queryError instanceof Error ? queryError.message : 'Unknown error';
+  if (!posts.length && !hasNextPage) {
     return (
       <View style={styles.center}>
-        <Text>Error: {errorMessage}</Text>
+        <EmptyState
+          title="По вашему запросу ничего нет"
+          action={{
+            label: 'На главную',
+            onPress: retry,
+          }}
+        />
       </View>
     );
   }
-
-  if (!posts.length) {
-    return (
-      <View style={styles.center}>
-        <Text>No posts</Text>
-      </View>
-    );
-  }
-
-  const fetchNext = () => {
-    if (isFetchingNextPage || !hasNextPage) return;
-
-    fetchNextPage();
-  };
 
   return (
     <View style={styles.container}>
@@ -67,7 +62,19 @@ const PostsScreen = () => {
         }}
         refreshing={isRefetching}
         onRefresh={onRefresh}
-        ListFooterComponent={isFetchingNextPage ? <PostCardSkeleton /> : null}
+        ItemSeparatorComponent={() => <View style={styles.listGap} />}
+        ListFooterComponent={
+          error &&
+          data && (
+            <EmptyState
+              title="Не удалось загрузить следующие посты"
+              action={{
+                label: 'Повторить',
+                onPress: retry,
+              }}
+            />
+          )
+        }
       />
     </View>
   );
@@ -76,7 +83,7 @@ const PostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: tokens.palette.neutral[0],
   },
   center: {
     flex: 1,
@@ -84,18 +91,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   item: {
-    padding: 16,
+    padding: tokens.spacing.xl,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: tokens.palette.neutral[400],
+  },
+  listGap: {
+    height: tokens.spacing.xl,
+    width: tokens.spacing.xl,
   },
   title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 4,
+    fontSize: tokens.fontSize.lg,
+    fontWeight: '700',
+    marginBottom: tokens.spacing.xs,
   },
   body: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: tokens.fontSize.sm,
+    color: tokens.palette.neutral[700],
   },
 });
 
