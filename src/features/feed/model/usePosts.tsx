@@ -5,11 +5,17 @@ import { getPosts } from '@/shared/api/generated/posts/posts';
 import { type UIError } from '@/shared/ui/uiErrors';
 import { type PostPage } from './types';
 
+const NETWORK_ERROR: UIError = { type: 'network' };
+
 export const usePosts = () => {
   const query = useInfiniteQuery<PostPage, UIError, InfiniteData<PostPage>, string[], string>({
     queryKey: ['posts'],
     initialPageParam: '',
     queryFn: async ({ pageParam }) => {
+      if (!networkStore.isOnline) {
+        throw NETWORK_ERROR;
+      }
+
       const response = await getPosts({ cursor: pageParam });
 
       return {
@@ -19,6 +25,7 @@ export const usePosts = () => {
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     placeholderData: keepPreviousData,
+    retry: (_, error) => error.type !== 'network',
   });
 
   const retry = () => {
