@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { View } from 'react-native';
 import type { Post } from '../model/types';
 import { stylesheet } from './PostCard.styles';
@@ -34,3 +35,5 @@ export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
     </View>
   );
 }
+
+export const PostCardMemo = memo(PostCard);

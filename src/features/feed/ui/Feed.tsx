@@ -1,6 +1,7 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { PostCard } from '@/entities/post/ui';
+import { Post } from '@/entities/post/model/types';
+import { PostCardMemo } from '@/entities/post/ui';
 import { tokens } from '@/shared/styles/tokens';
 import { usePosts } from '../model/usePosts';
 import { FeedEmpty } from './FeedEmpty';
@@ -15,6 +16,10 @@ export function FeedScreen() {
     retry,
     fetchNext,
   } = usePosts();
+
+  const renderPostCard = useCallback(({ item }: { item: Post }) => {
+    return <PostCardMemo post={item} />;
+  }, []);
 
   const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
 
@@ -32,7 +37,7 @@ export function FeedScreen() {
       <FlatList
         data={posts}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <PostCard post={item} />}
+        renderItem={renderPostCard}
         onEndReached={fetchNext}
         onEndReachedThreshold={0.5}
         refreshing={isRefetching}
