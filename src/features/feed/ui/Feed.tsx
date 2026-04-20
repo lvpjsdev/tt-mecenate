@@ -8,14 +8,12 @@ import { FeedError } from './FeedError';
 import { FeedListFooter } from './FeedListFooter';
 import { FeedLoader } from './FeedLoader';
 import { FeedSkeleton } from './FeedSkeleton';
-import { isNearBottom } from './utils';
 
 export function FeedScreen() {
   const {
-    query: { data, isRefetching, isFetching, isFetchingNextPage, error },
+    query: { data, isRefetching, isFetching, isFetchingNextPage, error, refetch },
     retry,
     fetchNext,
-    refresh,
   } = usePosts();
 
   const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
@@ -35,12 +33,10 @@ export function FeedScreen() {
         data={posts}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => <PostCard post={item} />}
-        onScroll={(e) => {
-          if (!isNearBottom(e)) return;
-          fetchNext();
-        }}
+        onEndReached={fetchNext}
+        onEndReachedThreshold={0.5}
         refreshing={isRefetching}
-        onRefresh={refresh}
+        onRefresh={refetch}
         ItemSeparatorComponent={() => <View style={styles.listGap} />}
         ListEmptyComponent={<FeedEmpty onReset={retry} />}
         ListFooterComponent={
