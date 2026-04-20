@@ -7,26 +7,14 @@ import {
   Manrope_700Bold,
   useFonts,
 } from '@expo-google-fonts/dev';
-import NetInfo from '@react-native-community/netinfo';
-import {
-  focusManager,
-  onlineManager,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { AppState, type AppStateStatus, View } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@/core/theme/ThemeProvider';
-import { Button, Text } from '@/shared/ui';
-
-onlineManager.setEventListener((setOnline) => {
-  return NetInfo.addEventListener((state) => {
-    setOnline(state.isConnected ?? true);
-  });
-});
+import { EmptyState } from '@/shared/ui/EmptyState';
 
 const onChangeAppState = (appStatus: AppStateStatus) =>
   focusManager.setFocused(appStatus === 'active');
@@ -65,14 +53,13 @@ export default function RootLayout() {
 
   return (
     <ErrorBoundary
-      fallbackRender={({ resetErrorBoundary }) => {
-        return (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text variant="label">Something went wrong</Text>
-            <Button label="Retry" onPress={resetErrorBoundary} />
-          </View>
-        );
-      }}
+      fallbackRender={({ resetErrorBoundary }) => (
+        <EmptyState
+          title="Something went wrong"
+          description="An unexpected error occurred. Please try again."
+          action={{ label: 'Retry', onPress: resetErrorBoundary }}
+        />
+      )}
     >
       <SafeAreaProvider>
         <ThemeProvider>
