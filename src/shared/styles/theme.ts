@@ -1,107 +1,80 @@
-export const theme = {
+/**
+ * Semantic theme — maps color tokens to meaningful roles.
+ * Only colors live here: switching themes means swapping these mappings.
+ * Spacing, typography, and shape tokens are theme-independent — use tokens.ts directly.
+ */
+import { tokens } from './tokens';
+
+export const lightTheme = {
+  // --- Interactive state colors (e.g. Button) ---
   states: {
     primary: {
-      default: { background: '#6115cd', text: '#ffffff', icon: '#ffffff' },
-      hover: { background: '#4e11a4', text: '#ffffff', icon: '#ffffff' },
-      pressed: { background: '#3a0d7b', text: '#ffffff', icon: '#ffffff' },
-      disabled: { background: '#d5c9ff', text: '#ffffff', icon: '#ffffff' },
+      default: {
+        background: tokens.palette.purple[500],
+        text: tokens.palette.neutral[0],
+        icon: tokens.palette.neutral[0],
+      },
+      hover: {
+        background: tokens.palette.purple[600],
+        text: tokens.palette.neutral[0],
+        icon: tokens.palette.neutral[0],
+      },
+      pressed: {
+        background: tokens.palette.purple[700],
+        text: tokens.palette.neutral[0],
+        icon: tokens.palette.neutral[0],
+      },
+      disabled: {
+        background: tokens.palette.purple[100],
+        text: tokens.palette.neutral[0],
+        icon: tokens.palette.neutral[0],
+      },
     },
   },
+
+  // --- Semantic color roles ---
   colors: {
     primary: {
-      default: '#6115cd',
-      hover: '#4e11a4',
-      pressed: '#3a0d7b',
-      disabled: '#d5c9ff',
+      default: tokens.palette.purple[500],
+      hover: tokens.palette.purple[600],
+      pressed: tokens.palette.purple[700],
+      disabled: tokens.palette.purple[100],
     },
     secondary: {
-      default: '#ff2b75',
-      hover: '#ffbad2',
-      pressed: '#de2465',
-      light: '#ffeaf1',
+      default: tokens.palette.pink[500],
+      hover: tokens.palette.pink[200],
+      pressed: tokens.palette.pink[600],
+      light: tokens.palette.pink[100],
     },
     background: {
-      default: '#ffffff',
-      secondary: '#eff2f7',
-      tertiary: '#f3f3f3',
-      hover: '#e6e9ef',
-      disabled: '#dddddd',
+      default: tokens.palette.neutral[0],
+      secondary: tokens.palette.neutral[150],
+      tertiary: tokens.palette.neutral[100],
+      hover: tokens.palette.neutral[200],
+      disabled: tokens.palette.neutral[300],
     },
     text: {
-      primary: '#000000',
-      secondary: '#57626f',
-      disabled: '#c3cad1',
-      placeholder: '#b6bec8',
-      inverse: '#ffffff',
+      primary: tokens.palette.neutral[1000],
+      secondary: tokens.palette.neutral[700],
+      disabled: tokens.palette.neutral[600],
+      placeholder: tokens.palette.neutral[500],
+      inverse: tokens.palette.neutral[0],
     },
     border: {
-      default: '#e8ecef',
-      focus: '#eff2f7',
+      default: tokens.palette.neutral[400],
+      focus: tokens.palette.neutral[150],
     },
     icon: {
-      default: '#57626f',
-      disabled: '#b6bec8',
-      active: '#ff2b75',
+      default: tokens.palette.neutral[700],
+      disabled: tokens.palette.neutral[500],
+      active: tokens.palette.pink[500],
     },
     skeleton: {
-      base: '#eeeff1',
-      highlight: '#f8f8f8',
+      base: tokens.palette.skeleton.base,
+      highlight: tokens.palette.skeleton.highlight,
     },
   },
-  typography: {
-    fontFamily: {
-      primary: 'Manrope',
-    },
-    fontSize: {
-      xs: 12,
-      sm: 13,
-      base: 15,
-      lg: 16,
-      xl: 18,
-      '2xl': 20,
-      '3xl': 24,
-      '4xl': 28,
-    },
-    fontWeight: {
-      regular: 400,
-      medium: 500,
-      semibold: 600,
-      bold: 700,
-    },
-    lineHeight: {
-      tight: 1.2,
-      normal: 1.333,
-      relaxed: 1.384,
-      loose: 1.5,
-    },
-    letterSpacing: {
-      tight: -0.02,
-      normal: 0,
-      wide: 0.02,
-    },
-  },
-  spacing: {
-    xs: 4,
-    sm: 6,
-    md: 8,
-    base: 10,
-    lg: 12,
-    xl: 16,
-    '2xl': 20,
-    '3xl': 24,
-    '4xl': 32,
-    '5xl': 40,
-    '6xl': 48,
-  },
-  borderRadius: {
-    none: 0,
-    sm: 4,
-    md: 8,
-    lg: 14,
-    xl: 20,
-    '2xl': 22,
-    full: 9999,
-  },
-};
+} as const;
 
-export type AppTheme = typeof theme;
+export type AppTheme = typeof lightTheme;
+export type ThemeMode = 'light';

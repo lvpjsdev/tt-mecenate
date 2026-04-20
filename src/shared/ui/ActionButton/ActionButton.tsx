@@ -1,12 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Pressable, View } from 'react-native';
-import { theme } from '../../styles/theme';
+import { useTheme } from '@/core/theme/ThemeProvider';
 import { Text } from '../Text';
 import { stylesheet } from './ActionButton.styles';
 import type { ActionButtonProps } from './ActionButton.types';
 
 export function ActionButton({ type, count, active, disabled, onPress }: ActionButtonProps) {
+  const theme = useTheme();
+
   const iconName: React.ComponentProps<typeof Ionicons>['name'] =
     type === 'like' ? (active ? 'heart' : 'heart-outline') : 'chatbubble-outline';
 

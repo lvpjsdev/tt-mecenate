@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import type { LayoutChangeEvent, NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 import { Text as RNText, View } from 'react-native';
-import { theme } from '@/shared/styles/theme';
+import { useTheme } from '@/core/theme/ThemeProvider';
 import { ActionButton, Avatar, Button, LinkButton, Text } from '@/shared/ui';
 import type { Post } from '../model/types';
 import { stylesheet } from './PostCard.styles';
@@ -17,6 +17,7 @@ export interface PostCardProps {
 }
 
 export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
+  const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isTextLong, setIsTextLong] = useState(false);
   const [btnWidth, setBtnWidth] = useState(0);

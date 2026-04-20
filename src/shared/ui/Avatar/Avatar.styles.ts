@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../styles/theme';
+import { tokens } from '../../styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   image: {
-    borderRadius: theme.borderRadius.full,
+    borderRadius: tokens.borderRadius.full,
   },
 });

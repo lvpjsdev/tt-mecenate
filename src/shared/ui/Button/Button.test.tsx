@@ -1,6 +1,6 @@
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
-import { theme } from '../../styles/theme';
+import { lightTheme as theme } from '../../styles/theme';
 // Now import the component
 import { Button } from './Button';
 

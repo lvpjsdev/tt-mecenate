@@ -1,5 +1,5 @@
 import { Image, View } from 'react-native';
-import { theme } from '@/shared/styles/theme';
+import { useTheme } from '@/core/theme/ThemeProvider';
 import { Button } from '@/shared/ui/Button';
 import { Text } from '@/shared/ui/Text';
 import illustrationSticker from '../../../../assets/illustration_sticker.png';
@@ -7,6 +7,8 @@ import { styles } from './EmptyState.styles';
 import type { EmptyStateProps } from './EmptyState.types';
 
 export function EmptyState({ title, description, illustration, action }: EmptyStateProps) {
+  const theme = useTheme();
+
   return (
     <View style={styles.outer}>
       <View style={styles.content}>

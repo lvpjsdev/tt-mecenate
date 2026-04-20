@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../styles/theme';
+import { tokens } from '../../styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   label: {
-    fontSize: theme.typography.fontSize.base,
-    fontWeight: '500',
+    fontSize: tokens.fontSize.base,
+    fontWeight: `${tokens.fontWeight.medium}` as '500',
   },
 });

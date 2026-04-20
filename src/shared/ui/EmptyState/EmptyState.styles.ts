@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '@/shared/styles/theme';
+import { tokens } from '@/shared/styles/tokens';
 
 export const styles = StyleSheet.create({
   outer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.background.default,
+    backgroundColor: tokens.palette.neutral[0],
   },
   content: {
     alignItems: 'center',
-    gap: theme.spacing.xl,
-    paddingHorizontal: theme.spacing.xl,
+    gap: tokens.spacing.xl,
+    paddingHorizontal: tokens.spacing.xl,
   },
   illustration: {
     width: 112,

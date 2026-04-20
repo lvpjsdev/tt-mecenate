@@ -1,9 +1,11 @@
 import { Pressable, Text } from 'react-native';
-import { theme } from '../../styles/theme';
+import { useTheme } from '@/core/theme/ThemeProvider';
 import { stylesheet } from './LinkButton.styles';
 import type { LinkButtonProps } from './LinkButton.types';
 
 export function LinkButton({ label, disabled, onPress, style, onLayout }: LinkButtonProps) {
+  const theme = useTheme();
+
   const handlePress = () => {
     if (disabled) return;
     onPress?.();

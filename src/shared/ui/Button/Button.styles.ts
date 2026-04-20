@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../styles/theme';
+import { tokens } from '../../styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   container: {
-    borderRadius: theme.borderRadius.lg,
-    paddingVertical: theme.spacing.xl,
-    paddingHorizontal: theme.spacing['4xl'],
+    borderRadius: tokens.borderRadius.lg,
+    paddingVertical: tokens.spacing.xl,
+    paddingHorizontal: tokens.spacing['4xl'],
     alignItems: 'center',
     justifyContent: 'center',
   },

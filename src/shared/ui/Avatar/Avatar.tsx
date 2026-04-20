@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { theme } from '../../styles/theme';
+import { tokens } from '@/shared/styles/tokens';
 import type { AvatarProps } from './Avatar.types';
 
 const DEFAULT_SIZE = 40;
@@ -14,7 +14,7 @@ export function Avatar({ uri, size = DEFAULT_SIZE, placeholder, testID }: Avatar
       style={{
         width: size,
         height: size,
-        borderRadius: theme.borderRadius.full,
+        borderRadius: tokens.borderRadius.full,
       }}
     />
   );

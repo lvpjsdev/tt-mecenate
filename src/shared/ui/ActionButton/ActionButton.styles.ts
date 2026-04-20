@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../styles/theme';
+import { tokens } from '../../styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   pill: {
-    borderRadius: theme.borderRadius.full,
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.lg,
+    borderRadius: tokens.borderRadius.full,
+    paddingVertical: tokens.spacing.sm,
+    paddingHorizontal: tokens.spacing.lg,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.xs,
+    gap: tokens.spacing.xs,
   },
 });

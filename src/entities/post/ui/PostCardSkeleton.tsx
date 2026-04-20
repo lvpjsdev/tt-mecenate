@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
-import { theme } from '@/shared/styles/theme';
+import { tokens } from '@/shared/styles/tokens';
 
 function SkeletonBox({
   width,
   height,
-  borderRadius = theme.borderRadius['2xl'],
+  borderRadius = tokens.borderRadius['2xl'],
   style,
 }: {
   width: number | `${number}%`;
@@ -36,7 +36,7 @@ function SkeletonBox({
 
   const backgroundColor = shimmer.interpolate({
     inputRange: [0, 1],
-    outputRange: [theme.colors.skeleton.base, theme.colors.skeleton.highlight],
+    outputRange: [tokens.palette.skeleton.base, tokens.palette.skeleton.highlight],
   });
 
   return (
@@ -60,7 +60,7 @@ export function PostCardSkeleton() {
     <View style={styles.card}>
       {/* Header: аватар + имя */}
       <View style={styles.header}>
-        <SkeletonBox width={40} height={40} borderRadius={theme.borderRadius.full} />
+        <SkeletonBox width={40} height={40} borderRadius={tokens.borderRadius.full} />
         <SkeletonBox width={120} height={20} />
       </View>
 
@@ -88,30 +88,30 @@ PostCardSkeleton.displayName = 'PostCardSkeleton';
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: theme.colors.background.default,
-    borderRadius: theme.borderRadius.lg,
+    backgroundColor: tokens.palette.neutral[0],
+    borderRadius: tokens.borderRadius.lg,
     overflow: 'hidden',
-    gap: theme.spacing.xl,
-    paddingBottom: theme.spacing.lg,
+    gap: tokens.spacing.xl,
+    paddingBottom: tokens.spacing.lg,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.xl,
-    paddingTop: theme.spacing.lg,
+    gap: tokens.spacing.lg,
+    paddingHorizontal: tokens.spacing.xl,
+    paddingTop: tokens.spacing.lg,
   },
   coverWrapper: {
     width: '100%',
   },
   body: {
-    gap: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xl,
+    gap: tokens.spacing.md,
+    paddingHorizontal: tokens.spacing.xl,
   },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xl,
+    gap: tokens.spacing.md,
+    paddingHorizontal: tokens.spacing.xl,
   },
 });

@@ -1,23 +1,22 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '@/shared/styles/theme';
+import { tokens } from '@/shared/styles/tokens';
 
-export const BODY_LINE_HEIGHT =
-  theme.typography.fontSize.base * theme.typography.lineHeight.relaxed;
+export const BODY_LINE_HEIGHT = tokens.fontSize.base * tokens.lineHeight.relaxed;
 
 export const stylesheet = StyleSheet.create({
   card: {
-    backgroundColor: theme.colors.background.default,
-    borderRadius: theme.borderRadius.lg,
+    backgroundColor: tokens.palette.neutral[0],
+    borderRadius: tokens.borderRadius.lg,
     overflow: 'hidden',
-    gap: theme.spacing.xl,
-    paddingBottom: theme.spacing.lg,
+    gap: tokens.spacing.xl,
+    paddingBottom: tokens.spacing.lg,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.xl,
-    paddingTop: theme.spacing.lg,
+    gap: tokens.spacing.lg,
+    paddingHorizontal: tokens.spacing.xl,
+    paddingTop: tokens.spacing.lg,
   },
   authorName: {
     flex: 1,
@@ -37,56 +36,56 @@ export const stylesheet = StyleSheet.create({
   },
   lockedContent: {
     alignItems: 'center',
-    gap: theme.spacing.md,
+    gap: tokens.spacing.md,
   },
   lockedTextAndButton: {
-    gap: theme.spacing.md,
+    gap: tokens.spacing.md,
     width: 239,
   },
   lockedIconWrapper: {
     width: 42,
     height: 42,
-    borderRadius: 10,
-    backgroundColor: theme.colors.primary.default,
+    borderRadius: tokens.borderRadius.md,
+    backgroundColor: tokens.palette.purple[500],
     justifyContent: 'center',
     alignItems: 'center',
   },
   lockedIconCircle: {
     width: 28,
     height: 28,
-    borderRadius: 14,
-    backgroundColor: '#ffffff',
+    borderRadius: tokens.borderRadius.full,
+    backgroundColor: tokens.palette.neutral[0],
     justifyContent: 'center',
     alignItems: 'center',
   },
   lockedIconText: {
-    color: '#ffffff',
-    fontSize: 20,
+    color: tokens.palette.neutral[0],
+    fontSize: tokens.fontSize['2xl'],
     fontWeight: '700',
   },
   lockedText: {
     textAlign: 'center' as const,
   },
   lockedMessageText: {
-    color: '#ffffff',
-    fontFamily: theme.typography.fontFamily.primary,
-    fontSize: theme.typography.fontSize.base,
+    color: tokens.palette.neutral[0],
+    fontFamily: tokens.fontFamily.primary,
+    fontSize: tokens.fontSize.base,
     fontWeight: '600',
-    lineHeight: theme.typography.fontSize.base * theme.typography.lineHeight.normal,
+    lineHeight: tokens.fontSize.base * tokens.lineHeight.normal,
     textAlign: 'center',
   },
   lockedButtonWrapper: {
     alignSelf: 'stretch',
   },
   body: {
-    gap: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xl,
+    gap: tokens.spacing.md,
+    paddingHorizontal: tokens.spacing.xl,
   },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xl,
+    gap: tokens.spacing.md,
+    paddingHorizontal: tokens.spacing.xl,
   },
   previewContainer: {
     position: 'relative',
@@ -99,7 +98,7 @@ export const stylesheet = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: theme.colors.background.default,
+    backgroundColor: tokens.palette.neutral[0],
   },
   showMoreGradient: {
     position: 'absolute',
