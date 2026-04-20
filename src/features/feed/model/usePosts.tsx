@@ -1,21 +1,14 @@
 import { InfiniteData, keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
-import { networkStore } from '@/core/stores/network.store';
 import { mapPost } from '@/entities/post/model/post.mapper';
 import { getPosts } from '@/shared/api/generated/posts/posts';
 import { type UIError } from '@/shared/ui/uiErrors';
 import { type PostPage } from './types';
-
-const NETWORK_ERROR: UIError = { type: 'network' };
 
 export const usePosts = () => {
   const query = useInfiniteQuery<PostPage, UIError, InfiniteData<PostPage>, string[], string>({
     queryKey: ['posts'],
     initialPageParam: '',
     queryFn: async ({ pageParam }) => {
-      if (!networkStore.isOnline) {
-        throw NETWORK_ERROR;
-      }
-
       const response = await getPosts({ cursor: pageParam });
 
       return {
@@ -29,8 +22,6 @@ export const usePosts = () => {
   });
 
   const retry = () => {
-    if (!networkStore.isOnline) return;
-
     query.refetch();
   };
 

@@ -3,10 +3,11 @@ import { reaction } from 'mobx';
 import { networkStore } from './network.store';
 
 export const setupReactions = () => {
-  reaction(
+  return reaction(
     () => networkStore.isOnline,
     (isOnline) => {
       onlineManager.setOnline(isOnline);
     },
+    { fireImmediately: true },
   );
 };

@@ -9,6 +9,7 @@ import {
 } from '@expo-google-fonts/dev';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { setupReactions } from '@/core/stores/reactions';
@@ -33,10 +34,9 @@ const queryClient = new QueryClient({
   },
 });
 
-setupReactions();
-
 export default function RootLayout() {
   useReactQueryDevTools(queryClient);
+  useEffect(() => setupReactions(), []);
 
   const [loaded] = useFonts({
     Manrope_400Regular,

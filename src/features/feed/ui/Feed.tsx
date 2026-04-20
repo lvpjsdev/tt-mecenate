@@ -1,5 +1,7 @@
-import { useCallback } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { networkStore } from '@/core/stores/network.store';
 import { Post } from '@/entities/post/model/types';
 import { PostCardMemo } from '@/entities/post/ui';
 import { tokens } from '@/shared/styles/tokens';
@@ -9,18 +11,36 @@ import { FeedError } from './FeedError';
 import { FeedListFooter } from './FeedListFooter';
 import { FeedSkeleton } from './FeedSkeleton';
 
-export function FeedScreen() {
+const ListSeparatorComponent = () => <View style={styles.listGap} />;
+
+export const FeedScreen = observer(function FeedScreen() {
   const {
     query: { data, isRefetching, isFetching, isFetchingNextPage, error, refetch },
     retry,
     fetchNext,
   } = usePosts();
 
+  const isOffline = !networkStore.isOnline;
+
   const renderPostCard = useCallback(({ item }: { item: Post }) => {
     return <PostCardMemo post={item} />;
   }, []);
 
-  const posts = data?.pages.flatMap((p) => p.posts ?? []) ?? [];
+  const renderEmptyListComponent = useCallback(() => {
+    return <FeedEmpty onReset={retry} />;
+  }, [retry]);
+
+  const renderListFooterComponent = useCallback(() => {
+    if (isOffline) {
+      return <FeedListFooter isLoading={false} error={{ type: 'network' }} onRetry={retry} />;
+    }
+
+    return (
+      <FeedListFooter isLoading={isFetchingNextPage} error={data ? error : null} onRetry={retry} />
+    );
+  }, [isFetchingNextPage, data, retry, error, isOffline]);
+
+  const posts = useMemo(() => data?.pages.flatMap((p) => p.posts ?? []) ?? [], [data]);
 
   if (isFetching && !data) {
     return <FeedSkeleton />;
@@ -40,19 +60,13 @@ export function FeedScreen() {
         onEndReachedThreshold={0.5}
         refreshing={isRefetching}
         onRefresh={refetch}
-        ItemSeparatorComponent={() => <View style={styles.listGap} />}
-        ListEmptyComponent={<FeedEmpty onReset={retry} />}
-        ListFooterComponent={
-          <FeedListFooter
-            isLoading={isFetchingNextPage}
-            error={data ? error : null}
-            onRetry={retry}
-          />
-        }
+        ItemSeparatorComponent={ListSeparatorComponent}
+        ListEmptyComponent={renderEmptyListComponent}
+        ListFooterComponent={renderListFooterComponent}
       />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +75,5 @@ const styles = StyleSheet.create({
   },
   listGap: {
     height: tokens.spacing.xl,
-    width: tokens.spacing.xl,
   },
 });
