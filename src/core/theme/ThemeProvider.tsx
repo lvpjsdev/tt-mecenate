@@ -44,14 +44,12 @@ export const ThemeProvider: FC<Props> = ({ mode = 'light', children }) => {
   );
 };
 
-/** Returns the current AppTheme object directly. Throws if used outside ThemeProvider. */
 export const useTheme = (): AppTheme => {
   const ctx = useContext(ThemeContext);
   if (!ctx) throw new Error('useTheme must be used within a ThemeProvider');
   return ctx.theme;
 };
 
-/** Returns the full theme context (theme, mode, toggleTheme). Throws if used outside ThemeProvider. */
 export const useThemeContext = (): ThemeContextValue => {
   const ctx = useContext(ThemeContext);
   if (!ctx) throw new Error('useThemeContext must be used within a ThemeProvider');

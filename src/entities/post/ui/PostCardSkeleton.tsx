@@ -64,7 +64,6 @@ export function PostCardSkeleton() {
         <SkeletonBox width={120} height={20} />
       </View>
 
-      {/* Cover image */}
       <View style={styles.coverWrapper}>
         <SkeletonBox width={'100%'} height={393} borderRadius={0} />
       </View>

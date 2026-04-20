@@ -21,6 +21,7 @@ apiClient.interceptors.response.use(
   (error) => {
     //TODO: сюда добавить нормализацию ошибок
     console.error('API Error:', error);
+
     return Promise.reject(error);
   },
 );
@@ -34,17 +35,3 @@ export const customClient = async <TResponse extends ApiResponse<unknown>>(
 
   return response.data.data as NonNullable<TResponse['data']>;
 };
-
-// export const customInstance = async <T>(
-//   config: AxiosRequestConfig,
-//   options?: AxiosRequestConfig,
-// ): Promise<T> => {
-//   const { data } = await apiClient({
-//     ...config,
-//     ...options,
-//   });
-//   return data?.data ?? data;
-// };
-
-// export type ErrorType<Error> = AxiosError<Error>;
-// export type BodyType<BodyData> = BodyData;

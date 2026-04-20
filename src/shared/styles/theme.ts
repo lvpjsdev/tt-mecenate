@@ -1,12 +1,6 @@
-/**
- * Semantic theme — maps color tokens to meaningful roles.
- * Only colors live here: switching themes means swapping these mappings.
- * Spacing, typography, and shape tokens are theme-independent — use tokens.ts directly.
- */
 import { tokens } from './tokens';
 
 export const lightTheme = {
-  // --- Interactive state colors (e.g. Button) ---
   states: {
     primary: {
       default: {
@@ -32,7 +26,6 @@ export const lightTheme = {
     },
   },
 
-  // --- Semantic color roles ---
   colors: {
     primary: {
       default: tokens.palette.purple[500],

@@ -9,7 +9,6 @@ export function Button({ label, state: externalState = 'default', onPress }: But
   const theme = useTheme();
   const [pressState, setPressState] = useState<ButtonState>('default');
 
-  // External state has priority (disabled, loading)
   const effectiveState: ButtonState =
     externalState === 'disabled' || externalState === 'loading' ? externalState : pressState;
 
@@ -30,7 +29,6 @@ export function Button({ label, state: externalState = 'default', onPress }: But
     onPress?.();
   };
 
-  // Get colors from theme based on state
   const stateKey = effectiveState === 'loading' ? 'default' : effectiveState;
   const backgroundColor =
     theme.states.primary[stateKey]?.background ?? theme.states.primary.default.background;

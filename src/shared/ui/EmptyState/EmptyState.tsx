@@ -12,7 +12,6 @@ export function EmptyState({ title, description, illustration, action }: EmptySt
   return (
     <View style={styles.outer}>
       <View style={styles.content}>
-        {/* Illustration slot */}
         {illustration ?? (
           <Image
             source={illustrationSticker}
@@ -21,19 +20,16 @@ export function EmptyState({ title, description, illustration, action }: EmptySt
           />
         )}
 
-        {/* Title */}
         <Text variant="title" color={theme.colors.text.primary}>
           {title}
         </Text>
 
-        {/* Optional description */}
         {description ? (
           <Text variant="body" color={theme.colors.text.secondary}>
             {description}
           </Text>
         ) : null}
 
-        {/* Optional action button */}
         {action ? (
           <View style={styles.actionWrapper}>
             <Button label={action.label} onPress={action.onPress} />

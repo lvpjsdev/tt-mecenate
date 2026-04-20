@@ -1,4 +1,3 @@
-// src/shared/ui/Icon/Icon.types.ts
 import type { IconName } from './icons';
 
 export type { IconName };

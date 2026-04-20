@@ -1,5 +1,3 @@
-// Feature: ui-kit-components, Property 7: Disabled components do not invoke onPress
-// Validates: Requirements 5.5
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
 

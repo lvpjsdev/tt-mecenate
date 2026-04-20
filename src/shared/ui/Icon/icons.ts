@@ -1,4 +1,3 @@
-// src/shared/ui/Icon/icons.ts
 import CommentSvg from '@/../assets/icons/comment.svg';
 import DonateSvg from '@/../assets/icons/donate.svg';
 import LikeSvg from '@/../assets/icons/like.svg';

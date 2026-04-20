@@ -1,12 +1,4 @@
-/**
- * Design tokens — primitive values that form the foundation of the design system.
- * These are raw values: colors, sizes, spacing, typography scales.
- * Use these in static StyleSheet.create() calls.
- * Do NOT use semantic meaning here — that belongs in theme.ts.
- */
-
 export const tokens = {
-  // --- Color palette ---
   palette: {
     purple: {
       100: '#d5c9ff',
@@ -38,7 +30,6 @@ export const tokens = {
     },
   },
 
-  // --- Typography scale ---
   fontSize: {
     xs: 12,
     sm: 13,
@@ -70,7 +61,6 @@ export const tokens = {
     primary: 'Manrope',
   },
 
-  // --- Spacing scale ---
   spacing: {
     xs: 4,
     sm: 6,
@@ -85,7 +75,6 @@ export const tokens = {
     '6xl': 48,
   },
 
-  // --- Border radius scale ---
   borderRadius: {
     none: 0,
     sm: 4,

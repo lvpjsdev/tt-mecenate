@@ -38,13 +38,11 @@ export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
 
   return (
     <View style={stylesheet.card}>
-      {/* Header: avatar + author name */}
       <View style={stylesheet.header}>
         <Avatar uri={post.avatarUrl ?? ''} />
         <Text variant="label">{post.authorName}</Text>
       </View>
 
-      {/* Cover image + locked overlay */}
       {post.coverUrl ? (
         <View style={stylesheet.coverWrapper}>
           <Image
@@ -77,7 +75,6 @@ export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
         </View>
       ) : null}
 
-      {/* Body */}
       <View style={stylesheet.body}>
         {post.title ? <Text variant="title">{post.title}</Text> : null}
 

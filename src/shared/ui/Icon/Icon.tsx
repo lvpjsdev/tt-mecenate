@@ -1,4 +1,3 @@
-// src/shared/ui/Icon/Icon.tsx
 import type { IconProps } from './Icon.types';
 import { ICON_SIZE, icons } from './icons';
 
