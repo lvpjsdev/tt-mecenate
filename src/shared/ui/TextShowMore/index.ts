@@ -1,0 +1,1 @@
+export { TextShowMore } from './TextShowMore';

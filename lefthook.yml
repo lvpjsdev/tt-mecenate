@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome-check:
+      glob: "*.{ts,tsx,js,jsx}"
+      run: npx biome check {staged_files}
+    typecheck:
+      run: npx tsc --noEmit
