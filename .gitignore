@@ -44,3 +44,7 @@ yarn-error.*
 !.env.example
 .kiro
 .vscode
+# Expo
+.expo
+dist/
+web-build/
