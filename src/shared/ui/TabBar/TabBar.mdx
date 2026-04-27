@@ -1,0 +1,54 @@
+---
+title: TabBar
+description: Молекула горизонтальной панели вкладок с равномерным распределением элементов
+category: molecule
+---
+
+# TabBar
+
+Молекулярный компонент горизонтальной панели вкладок. Отображает список вкладок в виде строки с закруглённой рамкой. Каждая вкладка занимает равную долю ширины контейнера. Активная вкладка определяется по `selectedKey`.
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| tabs | `Tab[]` | — | Массив объектов вкладок с полями `key` и `label` |
+| selectedKey | string | — | Ключ активной вкладки |
+| onTabChange | (key: string) => void | — | Колбэк, вызываемый при выборе вкладки |
+
+### Интерфейс Tab
+
+| Поле | Тип | Описание |
+|------|-----|---------|
+| key | string | Уникальный идентификатор вкладки |
+| label | string | Текстовая метка вкладки |
+
+## Состояния
+
+- **активная вкладка** — фон `colors.primary.default`, текст `colors.text.inverse`
+- **неактивная вкладка** — прозрачный фон, текст `colors.text.secondary`
+
+## Использование
+
+```tsx
+import { TabBar } from '@/shared/ui';
+import { useState } from 'react';
+
+const tabs = [
+  { key: 'all', label: 'Все' },
+  { key: 'popular', label: 'Популярное' },
+  { key: 'new', label: 'Новое' },
+];
+
+function Example() {
+  const [selectedTab, setSelectedTab] = useState('all');
+
+  return (
+    <TabBar
+      tabs={tabs}
+      selectedKey={selectedTab}
+      onTabChange={setSelectedTab}
+    />
+  );
+}
+```
