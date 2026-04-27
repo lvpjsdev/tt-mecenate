@@ -1,11 +1,19 @@
 import { View } from 'react-native';
+import { useTheme } from '@/core/theme/ThemeProvider';
 import { TabItem } from '../TabItem';
 import { stylesheet } from './TabBar.styles';
 import type { TabBarProps } from './TabBar.types';
 
-export function TabBar({ tabs, selectedKey, onTabChange }: TabBarProps) {
+export function TabBar<T extends string, U extends string>({
+  tabs,
+  selectedKey,
+  onTabChange,
+}: TabBarProps<T, U>) {
+  const theme = useTheme();
+  const borderColor = theme.colors.border.default;
+
   return (
-    <View style={stylesheet.container}>
+    <View style={[stylesheet.container, { borderColor }]}>
       {tabs.map((tab) => (
         <View key={tab.key} style={{ flex: 1 }}>
           <TabItem
@@ -18,5 +26,3 @@ export function TabBar({ tabs, selectedKey, onTabChange }: TabBarProps) {
     </View>
   );
 }
-
-TabBar.displayName = 'TabBar';

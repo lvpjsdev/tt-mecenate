@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { filtersStore } from '@/core/stores/filters.store';
 import { networkStore } from '@/core/stores/network.store';
 import { Post } from '@/entities/post/model/types';
 import { PostCardMemo } from '@/entities/post/ui';
@@ -13,12 +14,13 @@ import { FeedSkeleton } from './FeedSkeleton';
 
 const ListSeparatorComponent = () => <View style={styles.listGap} />;
 
-export const FeedScreen = observer(function FeedScreen() {
+function FeedComponent() {
+  const tier = filtersStore.activeFilter;
   const {
     query: { data, isRefetching, isFetching, isFetchingNextPage, error, refetch },
     retry,
     fetchNext,
-  } = usePosts();
+  } = usePosts(tier);
 
   const isOffline = !networkStore.isOnline;
 
@@ -66,7 +68,7 @@ export const FeedScreen = observer(function FeedScreen() {
       />
     </View>
   );
-});
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -77,3 +79,5 @@ const styles = StyleSheet.create({
     height: tokens.spacing.xl,
   },
 });
+
+export const Feed = observer(FeedComponent);

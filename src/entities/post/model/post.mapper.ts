@@ -13,4 +13,5 @@ export const mapPost = (dto: API.PostDTO): Post => ({
   comments: dto.commentsCount ?? 0,
   isLiked: dto.isLiked,
   isPaid: dto.tier === 'paid',
+  tier: dto.tier ?? 'free',
 });

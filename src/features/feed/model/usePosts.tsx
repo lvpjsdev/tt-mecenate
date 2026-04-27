@@ -1,15 +1,17 @@
 import { InfiniteData, keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { mapPost } from '@/entities/post/model/post.mapper';
+import { TierFilter } from '@/features/filter-tabs/model/types';
 import { getPosts } from '@/shared/api/generated/posts/posts';
 import { type UIError } from '@/shared/ui/uiErrors';
 import { type PostPage } from './types';
 
-export const usePosts = () => {
+export const usePosts = (filter: TierFilter = 'all') => {
   const query = useInfiniteQuery<PostPage, UIError, InfiniteData<PostPage>, string[], string>({
-    queryKey: ['posts'],
+    queryKey: ['posts', filter],
     initialPageParam: '',
-    queryFn: async ({ pageParam }) => {
-      const response = await getPosts({ cursor: pageParam });
+    queryFn: async ({ pageParam, queryKey }) => {
+      const tier = queryKey[1] === 'all' ? undefined : (filter as Exclude<TierFilter, 'all'>);
+      const response = await getPosts({ cursor: pageParam, tier });
 
       return {
         ...response,

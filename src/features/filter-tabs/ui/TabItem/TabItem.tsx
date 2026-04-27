@@ -1,10 +1,12 @@
 import { Pressable } from 'react-native';
-import { theme } from '../../styles/theme';
-import { Text } from '../Text';
+import { useTheme } from '@/core/theme/ThemeProvider';
+import { Text } from '@/shared/ui/Text';
 import { stylesheet } from './TabItem.styles';
 import type { TabItemProps } from './TabItem.types';
 
 export function TabItem({ label, active, disabled, onPress, testID }: TabItemProps) {
+  const theme = useTheme();
+
   const backgroundColor = active
     ? disabled
       ? theme.colors.primary.disabled
