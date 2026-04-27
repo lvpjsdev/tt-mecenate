@@ -9,4 +9,7 @@ export type Post = {
   comments: number;
   isLiked?: boolean;
   isPaid: boolean;
+  tier: Tier;
 };
+
+export type Tier = 'free' | 'paid';
