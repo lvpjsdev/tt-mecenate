@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { tokens, lightTheme as theme } from '../../styles/theme';
+import { tokens } from '@/shared/styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   row: {

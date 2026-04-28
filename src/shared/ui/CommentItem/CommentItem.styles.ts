@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { tokens, lightTheme as theme } from '../../styles/theme';
+import { tokens } from '@/shared/styles/tokens';
 
 export const stylesheet = StyleSheet.create({
   container: {
@@ -14,11 +14,9 @@ export const stylesheet = StyleSheet.create({
   authorName: {
     fontSize: tokens.fontSize.base,
     fontWeight: '700',
-    color: tokens.palette.text.primary,
   },
   commentText: {
     fontSize: tokens.fontSize.sm,
     fontWeight: '500',
-    color: tokens.palette.text.primary,
   },
 });
