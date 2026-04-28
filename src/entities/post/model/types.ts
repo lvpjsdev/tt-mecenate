@@ -4,6 +4,7 @@ export type Post = {
   avatarUrl?: string;
   title?: string;
   preview: string;
+  body: string;
   coverUrl?: string;
   likes: number;
   comments: number;

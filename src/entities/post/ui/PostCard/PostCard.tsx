@@ -19,7 +19,7 @@ export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
 
   const handleOnPress = useCallback(() => {
     if (post.isPaid) {
-      return
+      return;
     }
     router.push({
       pathname: '/[postId]',

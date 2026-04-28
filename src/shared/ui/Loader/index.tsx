@@ -3,11 +3,11 @@ import { useTheme } from '@/core/theme/ThemeProvider';
 import { SpinningIcon } from '@/shared/ui';
 import { ICON_SIZE } from '@/shared/ui/Icon/icons';
 
-interface FeedLoaderProps {
+interface LoaderProps {
   paddingVertical?: number;
 }
 
-export function FeedLoader({ paddingVertical = 16 }: FeedLoaderProps) {
+export function Loader({ paddingVertical = 16 }: LoaderProps) {
   const theme = useTheme();
   return (
     <View style={[styles.container, { paddingVertical }]}>
