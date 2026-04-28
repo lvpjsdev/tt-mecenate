@@ -1,6 +1,8 @@
 export { ActionButton } from './ActionButton';
 export { Avatar } from './Avatar';
 export { Button } from './Button';
+export type { CommentItemProps } from './CommentItem';
+export { CommentItem } from './CommentItem';
 export type { EmptyStateProps } from './EmptyState';
 export { EmptyState } from './EmptyState';
 export type { IconName } from './Icon';

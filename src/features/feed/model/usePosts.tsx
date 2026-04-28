@@ -7,10 +7,11 @@ import { type PostPage } from './types';
 
 export const usePosts = (filter: TierFilter = 'all') => {
   const query = useInfiniteQuery<PostPage, UIError, InfiniteData<PostPage>, string[], string>({
-    queryKey: ['posts', filter],
+    queryKey: ['posts', 'list', filter],
     initialPageParam: '',
     queryFn: async ({ pageParam, queryKey }) => {
-      const tier = queryKey[1] === 'all' ? undefined : (filter as Exclude<TierFilter, 'all'>);
+      const tier = queryKey[2] === 'all' ? undefined : (filter as Exclude<TierFilter, 'all'>);
+
       const response = await getPosts({ cursor: pageParam, tier });
 
       return {

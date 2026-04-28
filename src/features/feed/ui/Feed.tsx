@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { filtersStore } from '@/core/stores/filters.store';
 import { networkStore } from '@/core/stores/network.store';
 import { Post } from '@/entities/post/model/types';
-import { PostCardMemo } from '@/entities/post/ui';
+import { PostCardMemo } from '@/entities/post/ui/PostCard';
 import { tokens } from '@/shared/styles/tokens';
 import { usePosts } from '../model/usePosts';
 import { FeedEmpty } from './FeedEmpty';

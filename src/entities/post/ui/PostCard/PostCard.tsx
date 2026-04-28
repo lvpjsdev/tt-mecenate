@@ -1,6 +1,7 @@
-import { memo } from 'react';
-import { View } from 'react-native';
-import type { Post } from '../model/types';
+import { useRouter } from 'expo-router';
+import { memo, useCallback } from 'react';
+import { Pressable } from 'react-native';
+import { Post } from '../../model/types';
 import { stylesheet } from './PostCard.styles';
 import { PostCardBody } from './PostCardBody';
 import { PostCardCover } from './PostCardCover';
@@ -14,8 +15,20 @@ export interface PostCardProps {
 }
 
 export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
+  const router = useRouter();
+
+  const handleOnPress = useCallback(() => {
+    if (post.isPaid) {
+      return;
+    }
+    router.push({
+      pathname: '/[postId]',
+      params: { postId: post.id },
+    });
+  }, [post.id, post.isPaid, router]);
+
   return (
-    <View style={stylesheet.card}>
+    <Pressable style={stylesheet.card} onPress={handleOnPress}>
       <PostCardHeader avatarUrl={post.avatarUrl} authorName={post.authorName} />
 
       {post.coverUrl ? (
@@ -32,7 +45,7 @@ export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
         onLike={onLike}
         onComment={onComment}
       />
-    </View>
+    </Pressable>
   );
 }
 
