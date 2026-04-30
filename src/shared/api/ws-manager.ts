@@ -1,11 +1,11 @@
-import { Comment } from '@/entities/comment/model/types';
+import type { CommentDTO } from '@/shared/api/generated/mecenateTestAPI.schemas';
 
 export type WSEventType = 'ping' | 'like_updated' | 'comment_added';
 
 export type WSEvent =
   | { type: 'ping' }
   | { type: 'like_updated'; postId: string; likesCount: number }
-  | { type: 'comment_added'; postId: string; comment: Comment };
+  | { type: 'comment_added'; postId: string; comment: CommentDTO };
 
 const WS_RECONNECT_BASE_DELAY = 500; // 500ms начальная задержка
 const WS_RECONNECT_EXPONENTIAL_BASE = 2;
@@ -24,6 +24,7 @@ export class WSManager {
   private listeners = new Map<WSEventType, Set<(e: WSEvent) => void>>();
   private reconnectAttempts = 0;
   private url: string;
+  private watchdogTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(url: string) {
     this.url = url;
@@ -35,6 +36,7 @@ export class WSManager {
     this.ws.onmessage = (e) => this.routeMessage(e);
     this.ws.onclose = () => this.reconnect();
     this.ws.onerror = () => this.ws?.close();
+    this.startWatchdog();
   }
 
   on(eventType: WSEventType, handler: (e: WSEvent) => void) {
@@ -50,6 +52,9 @@ export class WSManager {
   private routeMessage(e: MessageEvent) {
     try {
       const msg = JSON.parse(e.data);
+      if (msg.type === 'ping') {
+        this.resetWatchdog();
+      }
       this.listeners.get(msg.type)?.forEach((l) => l(msg));
     } catch (_) {
       console.error('WS message parse error');
@@ -60,6 +65,32 @@ export class WSManager {
     const delay = getWsReconnectDelay(this.reconnectAttempts);
     this.reconnectAttempts++;
     setTimeout(() => this.connect(), delay);
+  }
+
+  private startWatchdog() {
+    this.clearWatchdog();
+    this.watchdogTimer = setTimeout(() => {
+      this.ws?.close();
+      this.reconnect();
+    }, 60_000);
+  }
+
+  private resetWatchdog() {
+    this.clearWatchdog();
+    this.startWatchdog();
+  }
+
+  private clearWatchdog() {
+    if (this.watchdogTimer) {
+      clearTimeout(this.watchdogTimer);
+      this.watchdogTimer = null;
+    }
+  }
+
+  disconnect() {
+    this.clearWatchdog();
+    this.ws?.close();
+    this.ws = null;
   }
 }
 

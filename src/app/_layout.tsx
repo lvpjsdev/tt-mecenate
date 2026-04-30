@@ -16,7 +16,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { setupReactions } from '@/core/stores/reactions';
 import { ThemeProvider } from '@/core/theme/ThemeProvider';
 import { getRetryDelay } from '@/core/utils';
+import { useWsCommentAdded, useWsLikeUpdated } from '@/features/ws-realtime-updates';
+import { wsManager } from '@/shared/api/ws-manager';
 import { EmptyState } from '@/shared/ui/EmptyState';
+
+function AppProviders() {
+  useWsLikeUpdated();
+  useWsCommentAdded();
+  return null;
+}
 
 const QUERY_STALE_TIME_MS = 1000 * 60 * 5; // 5 minutes
 const QUERY_RETRY_COUNT = 3;
@@ -36,15 +44,17 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
-  useReactQueryDevTools(queryClient);
-  useEffect(() => setupReactions(), []);
-
   const [loaded] = useFonts({
     Manrope_400Regular,
     Manrope_500Medium,
     Manrope_600SemiBold,
     Manrope_700Bold,
   });
+  useReactQueryDevTools(queryClient);
+  useEffect(() => setupReactions(), []);
+  useEffect(() => {
+    wsManager.connect();
+  }, []);
 
   if (!loaded) {
     return null;
@@ -63,6 +73,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
+            <AppProviders />
             <KeyboardProvider>
               <Stack screenOptions={{ headerShown: false }} />
             </KeyboardProvider>
