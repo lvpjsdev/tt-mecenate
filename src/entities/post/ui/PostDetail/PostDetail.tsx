@@ -1,11 +1,13 @@
 import { Image } from 'expo-image';
 import { ScrollView, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
-import { ActionButton, Avatar, CommentItem, LinkButton, Text, TextShowMore } from '@/shared/ui';
+import { CommentsList } from '@/features/comments-list/ui/CommentsList';
+import { ActionButton, Avatar, LinkButton, Text, TextShowMore } from '@/shared/ui';
 import { stylesheet } from './PostDetail.styles';
 import type { PostDetailProps } from './PostDetail.types';
 
 export function PostDetail({
+  id,
   authorAvatarUri,
   authorName,
   imageUri,
@@ -64,19 +66,7 @@ export function PostDetail({
             <LinkButton label={sortLabel} onPress={onSortPress} />
           </View>
 
-          {comments.map((comment, index) => (
-            <View key={comment.id}>
-              <CommentItem
-                avatarUri={comment.avatarUri}
-                authorName={comment.authorName}
-                commentText={comment.commentText}
-                likeCount={comment.likeCount}
-                liked={comment.liked}
-                onLikePress={() => onCommentLikePress?.(comment.id)}
-              />
-              {index < comments.length - 1 && <View style={stylesheet.commentDivider} />}
-            </View>
-          ))}
+          <CommentsList postId={id} />
         </View>
       </View>
     </ScrollView>

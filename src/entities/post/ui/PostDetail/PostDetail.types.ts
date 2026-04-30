@@ -8,6 +8,8 @@ export interface CommentData {
 }
 
 export interface PostDetailProps {
+  /** ID поста */
+  id: string;
   /** URI аватара автора поста */
   authorAvatarUri: string;
   /** Имя автора поста */
