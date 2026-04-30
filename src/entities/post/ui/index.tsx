@@ -29,6 +29,7 @@ export function Post() {
 
   return (
     <PostDetail
+      id={postId}
       authorAvatarUri={data.avatarUrl ?? ''}
       authorName={data.authorName}
       imageUri={data.coverUrl ?? ''}
