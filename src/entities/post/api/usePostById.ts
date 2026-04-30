@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { PostDetailResponseDTOData } from '@/shared/api/generated/mecenateTestAPI.schemas';
 import { getPostsId } from '@/shared/api/generated/posts/posts';
 import { UIError } from '@/shared/ui/uiErrors';
 import { mapPost } from '../model/post.mapper';

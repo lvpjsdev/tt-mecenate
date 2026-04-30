@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
-import { Avatar } from '../Avatar';
-import { LikeButton } from '../LikeButton';
+import { Avatar } from '@/shared/ui/Avatar';
+import { LikeButton } from '@/shared/ui/LikeButton';
 import { stylesheet } from './CommentItem.styles';
 import type { CommentItemProps } from './CommentItem.types';
 
@@ -9,8 +9,8 @@ export function CommentItem({
   avatarUri,
   authorName,
   commentText,
-  likeCount,
-  liked,
+  likeCount = 0,
+  liked = false,
   onLikePress,
 }: CommentItemProps) {
   const theme = useTheme();
