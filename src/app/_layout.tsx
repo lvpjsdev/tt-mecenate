@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { setupReactions } from '@/core/stores/reactions';
 import { ThemeProvider } from '@/core/theme/ThemeProvider';
@@ -62,7 +63,9 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
-            <Stack screenOptions={{ headerShown: false }} />
+            <KeyboardProvider>
+              <Stack screenOptions={{ headerShown: false }} />
+            </KeyboardProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </SafeAreaProvider>
