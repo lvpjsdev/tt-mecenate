@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { SendButton } from '@/shared/ui/SendButton';
-import { sendCommentStore } from '../store/send-comment.store';
+import { sendCommentStore } from '../../store/send-comment.store';
 import { stylesheet } from './SendCommentInput.styles';
 import type { SendCommentInputProps } from './SendCommentInput.types';
 
