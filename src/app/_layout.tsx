@@ -6,7 +6,7 @@ import {
   Manrope_600SemiBold,
   Manrope_700Bold,
   useFonts,
-} from '@expo-google-fonts/dev';
+} from '@expo-google-fonts/manrope';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
