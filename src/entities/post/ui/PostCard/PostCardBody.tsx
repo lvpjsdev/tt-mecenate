@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { ActionButton, Text, TextShowMore } from '@/shared/ui';
 import { stylesheet } from './PostCard.styles';
+import { PostBodySkeleton } from './PostCardSkeleton';
 
 interface PostCardBodyProps {
   title?: string;
@@ -23,20 +24,22 @@ export function PostCardBody({
   onLike,
   onComment,
 }: PostCardBodyProps) {
+  if (isLocked) {
+    return <PostBodySkeleton />;
+  }
+
   return (
     <>
       <View style={stylesheet.body}>
         {title ? <Text variant="title">{title}</Text> : null}
 
-        {!isLocked && preview ? <TextShowMore text={preview} /> : null}
+        {preview ? <TextShowMore text={preview} /> : null}
       </View>
 
-      {!isLocked ? (
-        <View style={stylesheet.actions}>
-          <ActionButton type="like" count={likes} active={isLiked} onPress={onLike} />
-          <ActionButton type="comment" count={comments} onPress={onComment} />
-        </View>
-      ) : null}
+      <View style={stylesheet.actions}>
+        <ActionButton type="like" count={likes} active={isLiked} onPress={onLike} />
+        <ActionButton type="comment" count={comments} onPress={onComment} />
+      </View>
     </>
   );
 }
