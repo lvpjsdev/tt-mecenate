@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback, useMemo } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { filtersStore } from '@/core/stores/filters.store';
 import { networkStore } from '@/core/stores/network.store';
 import { Post } from '@/entities/post/model/types';
@@ -28,10 +28,6 @@ function FeedComponent() {
     return <PostCardMemo post={item} />;
   }, []);
 
-  const renderEmptyListComponent = useCallback(() => {
-    return <FeedEmpty onReset={retry} />;
-  }, [retry]);
-
   const renderListFooterComponent = useCallback(() => {
     if (isOffline) {
       return <FeedListFooter isLoading={false} error={{ type: 'network' }} onRetry={retry} />;
@@ -52,18 +48,20 @@ function FeedComponent() {
     return <FeedError error={error} onRetry={retry} />;
   }
 
+  if (!posts.length) {
+    return <FeedEmpty onReset={retry} />;
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         data={posts}
         keyExtractor={(item) => String(item.id)}
         renderItem={renderPostCard}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         onEndReached={fetchNext}
         onEndReachedThreshold={0.5}
-        refreshing={isRefetching}
-        onRefresh={refetch}
         ItemSeparatorComponent={ListSeparatorComponent}
-        ListEmptyComponent={renderEmptyListComponent}
         ListFooterComponent={renderListFooterComponent}
       />
     </View>
