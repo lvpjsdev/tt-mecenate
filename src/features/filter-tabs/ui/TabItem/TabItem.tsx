@@ -1,5 +1,6 @@
 import { Pressable } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
+import { tokens } from '@/shared/styles/tokens';
 import { Text } from '@/shared/ui/Text';
 import { stylesheet } from './TabItem.styles';
 import type { TabItemProps } from './TabItem.types';
@@ -19,6 +20,8 @@ export function TabItem({ label, active, disabled, onPress, testID }: TabItemPro
       ? theme.colors.text.disabled
       : theme.colors.text.secondary;
 
+  const fontWeight = active ? tokens.fontWeight.bold : tokens.fontWeight.medium;
+
   const handlePress = () => {
     if (!disabled) {
       onPress?.();
@@ -31,7 +34,7 @@ export function TabItem({ label, active, disabled, onPress, testID }: TabItemPro
       onPress={handlePress}
       testID={testID}
     >
-      <Text variant="label" color={textColor}>
+      <Text variant="label" color={textColor} style={{ fontWeight }}>
         {label}
       </Text>
     </Pressable>

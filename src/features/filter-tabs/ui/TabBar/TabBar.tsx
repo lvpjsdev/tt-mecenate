@@ -13,7 +13,12 @@ export function TabBar<T extends string, U extends string>({
   const borderColor = theme.colors.border.default;
 
   return (
-    <View style={[stylesheet.container, { borderColor }]}>
+    <View
+      style={[
+        stylesheet.container,
+        { borderColor, backgroundColor: theme.colors.background.default },
+      ]}
+    >
       {tabs.map((tab) => (
         <View key={tab.key} style={{ flex: 1 }}>
           <TabItem
