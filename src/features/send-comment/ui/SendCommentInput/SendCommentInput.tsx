@@ -2,6 +2,7 @@ import * as Haptics from 'expo-haptics';
 import { observer } from 'mobx-react-lite';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
+import { postPostsIdCommentsBodyTextMax } from '@/shared/api/generated/comments/comments.zod';
 import { SendButton } from '@/shared/ui/SendButton';
 import { sendCommentStore } from '../../store/send-comment.store';
 import { stylesheet } from './SendCommentInput.styles';
@@ -42,7 +43,7 @@ export const SendCommentInput = observer(({ onSend }: SendCommentInputProps) => 
         onChangeText={store.setCommentText}
         placeholder="Ваш комментарий"
         placeholderTextColor={theme.colors.text.placeholder}
-        maxLength={500}
+        maxLength={postPostsIdCommentsBodyTextMax}
         editable={!store.isLoading}
       />
       <SendButton disabled={isDisabled} onPress={handleSend} />
