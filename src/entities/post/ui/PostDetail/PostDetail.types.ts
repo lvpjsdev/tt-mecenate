@@ -15,4 +15,6 @@ export interface PostDetailProps {
   likeCount: number;
   /** Количество комментариев */
   commentCount: number;
+  /** Является ли пост избранным */
+  isLiked?: boolean;
 }

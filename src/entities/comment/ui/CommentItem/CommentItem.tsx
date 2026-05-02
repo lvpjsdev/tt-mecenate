@@ -26,7 +26,7 @@ export function CommentItem({
           {commentText}
         </Text>
       </View>
-      <LikeButton count={likeCount} active={liked} onPress={onLikePress} />
+      {/* <LikeButton count={likeCount} active={liked} onPress={onLikePress} /> */}
     </View>
   );
 }

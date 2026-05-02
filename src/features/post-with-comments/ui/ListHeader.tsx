@@ -61,6 +61,7 @@ const stylesheet = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: tokens.spacing.xs,
+    paddingHorizontal: tokens.spacing.xl,
   },
 });
 

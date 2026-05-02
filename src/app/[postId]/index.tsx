@@ -5,7 +5,7 @@ import { tokens } from '@/shared/styles/tokens';
 
 export default function PostScreen() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.palette.neutral[0] }}>
+    <SafeAreaView style={{ backgroundColor: tokens.palette.neutral[0] }}>
       <PostWithComments />
       <SendComment />
     </SafeAreaView>
