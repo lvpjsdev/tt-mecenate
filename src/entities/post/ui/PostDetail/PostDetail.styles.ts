@@ -11,7 +11,7 @@ export const stylesheet = StyleSheet.create({
     overflow: 'hidden',
     gap: tokens.spacing.xl,
     paddingBottom: tokens.spacing.xl,
-    marginHorizontal: tokens.spacing.xl,
+    // marginHorizontal: tokens.spacing.xl,
   },
   header: {
     flexDirection: 'row',

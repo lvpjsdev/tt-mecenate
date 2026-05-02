@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { ScrollView, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { ActionButton, Avatar, Text } from '@/shared/ui';
+import { PostCardHeader } from '../PostCard/PostCardHeader';
 import { stylesheet } from './PostDetail.styles';
 import type { PostDetailProps } from './PostDetail.types';
 
@@ -14,6 +15,7 @@ export function PostDetail({
   body,
   likeCount,
   commentCount,
+  isLiked = false,
 }: PostDetailProps) {
   const theme = useTheme();
 
@@ -23,12 +25,7 @@ export function PostDetail({
       showsVerticalScrollIndicator={false}
     >
       <View style={stylesheet.card}>
-        <View style={stylesheet.header}>
-          <Avatar uri={authorAvatarUri} size={40} />
-          <Text variant="label" color={theme.colors.text.primary}>
-            {authorName}
-          </Text>
-        </View>
+        <PostCardHeader avatarUrl={authorAvatarUri} authorName={authorName} />
 
         <Image source={{ uri: imageUri }} contentFit="cover" style={stylesheet.postImage} />
 
@@ -41,12 +38,7 @@ export function PostDetail({
         </View>
 
         <View style={stylesheet.actionsRow}>
-          <ActionButton
-            type="like"
-            count={likeCount}
-            onPress={() => {}}
-            // active={donateActive}
-          />
+          <ActionButton type="like" count={likeCount} onPress={() => {}} active={isLiked} />
           <ActionButton type="comment" count={commentCount} />
         </View>
       </View>
