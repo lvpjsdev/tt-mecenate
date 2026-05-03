@@ -10,7 +10,7 @@ export function EmptyState({ title, description, illustration, action }: EmptySt
   const theme = useTheme();
 
   return (
-    <View style={styles.outer}>
+    <View style={[styles.outer, { backgroundColor: theme.colors.background.default }]}>
       <View style={styles.content}>
         {illustration ?? (
           <Image

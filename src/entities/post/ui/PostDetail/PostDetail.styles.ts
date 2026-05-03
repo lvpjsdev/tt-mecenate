@@ -6,7 +6,6 @@ export const stylesheet = StyleSheet.create({
     flexGrow: 1,
   },
   card: {
-    backgroundColor: tokens.palette.neutral[0],
     borderRadius: tokens.borderRadius.lg,
     overflow: 'hidden',
     gap: tokens.spacing.xl,
@@ -24,7 +23,6 @@ export const stylesheet = StyleSheet.create({
     fontSize: tokens.fontSize.base,
     fontWeight: '700',
     fontFamily: tokens.fontFamily.primary,
-    color: tokens.palette.neutral[1000],
   },
   postImage: {
     width: '100%',
@@ -38,7 +36,6 @@ export const stylesheet = StyleSheet.create({
     fontSize: tokens.fontSize.xl,
     fontWeight: '700',
     fontFamily: tokens.fontFamily.primary,
-    color: tokens.palette.neutral[1000],
     lineHeight: tokens.fontSize.xl * tokens.lineHeight.loose,
   },
   actionsRow: {
@@ -60,10 +57,8 @@ export const stylesheet = StyleSheet.create({
     fontSize: tokens.fontSize.base,
     fontWeight: '600',
     fontFamily: tokens.fontFamily.primary,
-    color: tokens.palette.neutral[700],
   },
   commentDivider: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: tokens.palette.neutral[150],
   },
 });

@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { memo, useCallback } from 'react';
 import { Pressable } from 'react-native';
+import { useTheme } from '@/core/theme/ThemeProvider';
 import { useLike } from '../../api/useLike';
 import { Post } from '../../model/types';
 import { stylesheet } from './PostCard.styles';
@@ -16,6 +17,7 @@ export interface PostCardProps {
 
 export function PostCard({ post, onComment, onDonate }: PostCardProps) {
   const router = useRouter();
+  const theme = useTheme();
   const { mutate: toggleLike } = useLike(post.id);
 
   const handleOnPress = useCallback(() => {
@@ -29,7 +31,10 @@ export function PostCard({ post, onComment, onDonate }: PostCardProps) {
   }, [post.id, post.isPaid, router]);
 
   return (
-    <Pressable style={stylesheet.card} onPress={handleOnPress}>
+    <Pressable
+      style={[stylesheet.card, { backgroundColor: theme.colors.background.default }]}
+      onPress={handleOnPress}
+    >
       <PostCardHeader avatarUrl={post.avatarUrl} authorName={post.authorName} />
 
       {post.coverUrl ? (
