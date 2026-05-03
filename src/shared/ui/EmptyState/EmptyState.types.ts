@@ -11,5 +11,7 @@ export interface EmptyStateProps {
   action?: {
     label: string;
     onPress: () => void;
+    /** Отображать кнопку в состоянии загрузки */
+    isLoading?: boolean;
   };
 }
