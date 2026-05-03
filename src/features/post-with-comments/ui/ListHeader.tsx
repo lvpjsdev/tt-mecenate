@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
+import { useLike } from '@/entities/post/api/useLike';
 import { usePostById } from '@/entities/post/api/usePostById';
 import { PostDetail } from '@/entities/post/ui/PostDetail';
 import { tokens } from '@/shared/styles/tokens';
@@ -12,6 +13,7 @@ export function ListHeader({ postId }: { postId: string }) {
   const theme = useTheme();
 
   const { data: data, isError, isLoading } = usePostById(postId);
+  const { mutate: toggleLike } = useLike(postId);
 
   if (isLoading) {
     return <Loader />;
@@ -44,6 +46,8 @@ export function ListHeader({ postId }: { postId: string }) {
         body={data.body}
         likeCount={data.likes}
         commentCount={data.comments}
+        isLiked={data.isLiked}
+        onLike={toggleLike}
       />
       <View style={stylesheet.commentsHeader}>
         <Text variant="body" color={theme.colors.text.secondary}>

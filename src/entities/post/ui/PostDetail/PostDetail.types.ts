@@ -17,4 +17,6 @@ export interface PostDetailProps {
   commentCount: number;
   /** Является ли пост избранным */
   isLiked?: boolean;
+  /** Обработчик нажатия на кнопку лайка */
+  onLike?: () => void;
 }
