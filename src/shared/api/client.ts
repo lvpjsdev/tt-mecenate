@@ -15,11 +15,6 @@ apiClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  config.params = {
-    ...config.params,
-    simulate_error: true,
-  };
-
   return config;
 });
 
