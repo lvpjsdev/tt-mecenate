@@ -30,10 +30,6 @@ export function PostWithComments() {
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (!data) {
-    return null;
-  }
-
   if (isLoading) {
     return <Loader />;
   }
@@ -48,6 +44,10 @@ export function PostWithComments() {
         }}
       />
     );
+  }
+
+  if (!data) {
+    return null;
   }
 
   return (

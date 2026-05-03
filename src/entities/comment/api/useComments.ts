@@ -1,4 +1,4 @@
-import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getPostsIdComments } from '@/shared/api/generated/comments/comments';
 import { mapComment } from '../model/comment.mapper';
 
@@ -15,6 +15,5 @@ export const useComments = (postId: string) => {
     },
     initialPageParam: '',
     getNextPageParam: (lastPage) => lastPage?.nextCursor || undefined,
-    placeholderData: keepPreviousData,
   });
 };

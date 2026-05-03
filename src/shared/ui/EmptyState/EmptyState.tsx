@@ -32,7 +32,11 @@ export function EmptyState({ title, description, illustration, action }: EmptySt
 
         {action ? (
           <View style={styles.actionWrapper}>
-            <Button label={action.label} onPress={action.onPress} />
+            <Button
+              label={action.label}
+              onPress={action.onPress}
+              state={action.isLoading ? 'loading' : 'default'}
+            />
           </View>
         ) : null}
       </View>

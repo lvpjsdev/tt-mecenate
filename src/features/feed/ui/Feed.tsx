@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { filtersStore } from '@/core/stores/filters.store';
 import { networkStore } from '@/core/stores/network.store';
@@ -24,6 +24,13 @@ function FeedComponent() {
 
   const isOffline = !networkStore.isOnline;
 
+  // Запоминаем последнюю ошибку, чтобы не мигать скелетоном
+  // пока идёт повторный запрос (error на момент рефетча может быть null)
+  const lastErrorRef = useRef(error);
+  if (error) lastErrorRef.current = error;
+
+  const isRetrying = isFetching && !data;
+
   const renderPostCard = useCallback(({ item }: { item: Post }) => {
     return <PostCardMemo post={item} />;
   }, []);
@@ -40,12 +47,19 @@ function FeedComponent() {
 
   const posts = useMemo(() => data?.pages.flatMap((p) => p.posts ?? []) ?? [], [data]);
 
-  if (isFetching && !data) {
-    return <FeedSkeleton />;
+  if ((error || isRetrying) && !data && lastErrorRef.current) {
+    return (
+      <FeedError
+        title="Не удалось загрузить публикации"
+        error={lastErrorRef.current}
+        onRetry={retry}
+        isRetrying={isRetrying}
+      />
+    );
   }
 
-  if (error && !data) {
-    return <FeedError error={error} onRetry={retry} />;
+  if (isFetching && !data) {
+    return <FeedSkeleton />;
   }
 
   if (!posts.length) {
