@@ -1,4 +1,3 @@
-import { StyleSheet, View } from 'react-native';
 import { EmptyState } from '@/shared/ui';
 import { getUIErrorMessage, type UIError } from '@/shared/ui/uiErrors';
 
@@ -11,7 +10,6 @@ interface FeedErrorProps {
 
 export function FeedError({ title, error, onRetry, isRetrying }: FeedErrorProps) {
   return (
-    // <View style={styles.container}>
     <EmptyState
       title={title || getUIErrorMessage(error)}
       action={{
@@ -20,14 +18,5 @@ export function FeedError({ title, error, onRetry, isRetrying }: FeedErrorProps)
         isLoading: isRetrying,
       }}
     />
-    // </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
