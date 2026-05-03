@@ -53,6 +53,8 @@ export function PostWithComments() {
   return (
     // TODO: возможно стоит перейти на FlashList
     <FlatList
+      style={{ flex: 1 }}
+      directionalLockEnabled
       data={comments}
       refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
       ListHeaderComponent={<ListHeaderMemo postId={postId} />}
@@ -69,6 +71,7 @@ export function PostWithComments() {
       onEndReachedThreshold={0.3}
       keyExtractor={(item) => item.id}
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
       ListFooterComponent={isFetchingNextPage ? <Loader /> : null}
     />
   );
