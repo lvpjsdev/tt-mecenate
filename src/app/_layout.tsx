@@ -75,7 +75,7 @@ export default function RootLayout() {
           <QueryClientProvider client={queryClient}>
             <AppProviders />
             <KeyboardProvider>
-              <Stack screenOptions={{ headerShown: false }} />
+              <Stack screenOptions={{ headerShown: false, gestureEnabled: true }} />
             </KeyboardProvider>
           </QueryClientProvider>
         </ThemeProvider>
