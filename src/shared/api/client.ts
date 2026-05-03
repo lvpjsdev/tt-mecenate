@@ -14,12 +14,15 @@ apiClient.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.log(error);
+
     const normalError = normalizeError(error);
 
     return Promise.reject(normalError);

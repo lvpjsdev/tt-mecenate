@@ -2,6 +2,7 @@ import CommentSvg from '@/../assets/icons/comment.svg';
 import DonateSvg from '@/../assets/icons/donate.svg';
 import LikeSvg from '@/../assets/icons/like.svg';
 import LoaderSvg from '@/../assets/icons/loader.svg';
+import PaperPlaneSvg from '@/../assets/icons/paper-plane.svg';
 
 /**
  * Предопределённые размеры иконок.
@@ -22,6 +23,7 @@ export const icons = {
   donate: DonateSvg,
   like: LikeSvg,
   loader: LoaderSvg,
+  'paper-plane': PaperPlaneSvg,
 } as const;
 
 /** Тип имени иконки, выведенный из ключей реестра. */

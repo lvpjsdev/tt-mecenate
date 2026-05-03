@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { tokens } from '@/shared/styles/tokens';
 import { SkeletonBox } from './SkeletonBox';
@@ -14,15 +15,21 @@ export function PostCardSkeleton() {
         <SkeletonBox width={'100%'} height={393} borderRadius={0} />
       </View>
 
-      <View style={styles.body}>
-        <SkeletonBox width={164} height={26} />
-        <SkeletonBox width={'100%'} height={20} />
-      </View>
+      <PostBodySkeleton />
 
       <View style={styles.actions}>
         <SkeletonBox width={64} height={36} />
         <SkeletonBox width={64} height={36} />
       </View>
+    </View>
+  );
+}
+
+export function PostBodySkeleton(): ReactNode {
+  return (
+    <View style={styles.body}>
+      <SkeletonBox width={164} height={26} />
+      <SkeletonBox width={'100%'} height={40} />
     </View>
   );
 }

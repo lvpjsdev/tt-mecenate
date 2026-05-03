@@ -4,9 +4,13 @@ export type Post = {
   avatarUrl?: string;
   title?: string;
   preview: string;
+  body: string;
   coverUrl?: string;
   likes: number;
   comments: number;
   isLiked?: boolean;
   isPaid: boolean;
+  tier: Tier;
 };
+
+export type Tier = 'free' | 'paid';

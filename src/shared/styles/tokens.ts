@@ -33,7 +33,7 @@ export const tokens = {
 
   fontSize: {
     xs: 12,
-    sm: 13,
+    sm: 14,
     base: 15,
     lg: 16,
     xl: 18,

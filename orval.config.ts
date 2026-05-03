@@ -1,6 +1,7 @@
 import { defineConfig } from 'orval';
 
 export default defineConfig({
+  // HTTP client generation (axios-functions)
   mecenate: {
     input: './openapi.json',
     output: {
@@ -24,6 +25,17 @@ export default defineConfig({
     // Хак для того что бы Typescript считал файл модулем
     hooks: {
       afterAllFilesWrite: 'node scripts/patch-generated-schemas.mjs',
+    },
+  },
+
+  // Zod schema generation for runtime validation
+  mecenateZod: {
+    input: './openapi.json',
+    output: {
+      target: './src/shared/api/generated',
+      client: 'zod',
+      mode: 'tags-split',
+      fileExtension: '.zod.ts',
     },
   },
 });

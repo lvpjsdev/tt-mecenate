@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
+import { tokens } from '@/shared/styles/tokens';
 import { Icon } from '../Icon';
 import { ICON_SIZE } from '../Icon/icons';
 
@@ -8,7 +9,10 @@ interface SpinningIconProps {
   color?: string;
 }
 
-export function SpinningIcon({ size = ICON_SIZE.md, color = '#000000' }: SpinningIconProps) {
+export function SpinningIcon({
+  size = ICON_SIZE.md,
+  color = tokens.palette.neutral[1000],
+}: SpinningIconProps) {
   const rotation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

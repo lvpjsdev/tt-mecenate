@@ -8,9 +8,11 @@ export const mapPost = (dto: API.PostDTO): Post => ({
   avatarUrl: dto.author?.avatarUrl,
   title: dto.title,
   preview: dto.preview ?? dto.body?.slice(0, 140) ?? '',
+  body: dto.body ?? '',
   coverUrl: dto.coverUrl,
   likes: dto.likesCount ?? 0,
   comments: dto.commentsCount ?? 0,
   isLiked: dto.isLiked,
   isPaid: dto.tier === 'paid',
+  tier: dto.tier ?? 'free',
 });

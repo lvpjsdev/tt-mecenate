@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { PostCardSkeleton } from '@/entities/post/ui';
+import { PostCardSkeleton } from '@/entities/post/ui/PostCard';
 import { tokens } from '@/shared/styles/tokens';
 
 const SKELETON_COUNT = 5;
