@@ -62,7 +62,7 @@ function FeedComponent() {
     return <FeedSkeleton />;
   }
 
-  if (!posts.length) {
+  if (!posts.length && !isFetching) {
     return <FeedEmpty onReset={retry} />;
   }
 
