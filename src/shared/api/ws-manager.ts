@@ -24,15 +24,17 @@ export class WSManager {
   private listeners = new Map<WSEventType, Set<(e: WSEvent) => void>>();
   private reconnectAttempts = 0;
   private url: string;
+  private token: string;
   private watchdogTimer: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(url: string) {
+  constructor(url: string, token: string) {
     this.url = url;
+    this.token = token;
   }
 
   connect() {
     if (this.ws?.readyState === WebSocket.OPEN) return;
-    this.ws = new WebSocket(this.url);
+    this.ws = new WebSocket(`${this.url}?token=${this.token}`);
     this.ws.onmessage = (e) => this.routeMessage(e);
     this.ws.onclose = () => this.reconnect();
     this.ws.onerror = () => this.ws?.close();
@@ -94,4 +96,7 @@ export class WSManager {
   }
 }
 
-export const wsManager = new WSManager(process.env.EXPO_PUBLIC_WS_URL || '');
+export const wsManager = new WSManager(
+  process.env.EXPO_PUBLIC_WS_URL!,
+  process.env.EXPO_PUBLIC_API_TOKEN!,
+);

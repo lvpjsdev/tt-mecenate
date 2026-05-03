@@ -1,8 +1,9 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useCallback, useMemo } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { useComments } from '@/entities/comment/api/useComments';
 import { CommentItem } from '@/entities/comment/ui/CommentItem';
+import { tokens } from '@/shared/styles/tokens';
 import { EmptyState } from '@/shared/ui';
 import { Loader } from '@/shared/ui/Loader';
 import { ListHeaderMemo } from './ListHeader';
@@ -21,8 +22,6 @@ export function PostWithComments() {
     isRefetching,
   } = useComments(postId);
 
-  console.log(data);
-
   const comments = useMemo(() => data?.pages.flatMap((page) => page.comments) ?? [], [data]);
 
   const handleEndReached = useCallback(() => {
@@ -30,10 +29,6 @@ export function PostWithComments() {
       fetchNextPage();
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  if (!data) {
-    return null;
-  }
 
   if (isLoading) {
     return <Loader />;
@@ -51,6 +46,10 @@ export function PostWithComments() {
     );
   }
 
+  if (!data) {
+    return null;
+  }
+
   return (
     // TODO: возможно стоит перейти на FlashList
     <FlatList
@@ -58,11 +57,13 @@ export function PostWithComments() {
       refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
       ListHeaderComponent={<ListHeaderMemo postId={postId} />}
       renderItem={({ item }) => (
-        <CommentItem
-          avatarUri={item.avatarUrl || ''}
-          commentText={item.text || ''}
-          authorName={item.authorName || ''}
-        />
+        <View style={{ paddingVertical: tokens.spacing.md, paddingHorizontal: tokens.spacing.xl }}>
+          <CommentItem
+            avatarUri={item.avatarUrl || ''}
+            commentText={item.text || ''}
+            authorName={item.authorName || ''}
+          />
+        </View>
       )}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.3}

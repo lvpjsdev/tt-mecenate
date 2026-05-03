@@ -6,6 +6,5 @@ export const stylesheet = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: tokens.borderRadius.full,
     borderWidth: 1,
-    padding: tokens.spacing.xs,
   },
 });

@@ -9,9 +9,10 @@ export function CommentItem({
   avatarUri,
   authorName,
   commentText,
-  likeCount = 0,
-  liked = false,
-  onLikePress,
+  // TODO: пока что бэк не поддерживает лайки комментариев, хотя в дизайне они есть
+  // likeCount = 0,
+  // liked = false,
+  // onLikePress,
 }: CommentItemProps) {
   const theme = useTheme();
 
@@ -26,7 +27,8 @@ export function CommentItem({
           {commentText}
         </Text>
       </View>
-      <LikeButton count={likeCount} active={liked} onPress={onLikePress} />
+      {/* // TODO: пока что бэк не поддерживает лайки комментариев, хотя в дизайне они есть */}
+      {/* <LikeButton count={likeCount} active={liked} onPress={onLikePress} /> */}
     </View>
   );
 }

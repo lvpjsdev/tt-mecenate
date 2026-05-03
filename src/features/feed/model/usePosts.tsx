@@ -21,7 +21,7 @@ export const usePosts = (filter: TierFilter = 'all') => {
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     placeholderData: keepPreviousData,
-    retry: (_, error) => error.type !== 'network',
+    retry: (_, error) => error.type === 'network',
   });
 
   const retry = () => {
