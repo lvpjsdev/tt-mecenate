@@ -68,11 +68,63 @@ Orval читает схему из локального файла `openapi.json
 
 **Что реализовано:**
 
-- Список постов: аватар автора, имя, превью текста, обложка поста, счётчик лайков и комментариев
-- Курсорная пагинация (подгрузка при скролле вниз)
-- Pull-to-refresh
-- Закрытый пост (`tier: "paid"`) — заглушка вместо текста
-- Обработка ошибок: «Не удалось загрузить публикации» с кнопкой повтора
+### Список постов: аватар автора, имя, превью текста, обложка поста, счётчик лайков и комментариев
+
+Карточка поста собирается из трёх подкомпонентов:
+
+| Элемент | Файл |
+|---|---|
+| Корневой компонент карточки | `src/entities/post/ui/PostCard/PostCard.tsx` |
+| Шапка (аватар + имя автора) | `src/entities/post/ui/PostCard/PostCardHeader.tsx` |
+| Обложка поста | `src/entities/post/ui/PostCard/PostCardCover.tsx` |
+| Тело (превью, счётчики лайков/комментариев) | `src/entities/post/ui/PostCard/PostCardBody.tsx` |
+| Маппинг DTO → доменная модель (поля `avatarUrl`, `authorName`, `preview`, `coverUrl`, `likes`, `comments`) | `src/entities/post/model/post.mapper.ts` |
+| Тип доменной модели `Post` | `src/entities/post/model/types.ts` |
+
+Счётчики лайков и комментариев рендерятся через `<ActionButton type="like">` и `<ActionButton type="comment">` внутри `PostCardBody`.
+
+---
+
+### Курсорная пагинация (подгрузка при скролле вниз)
+
+| Что | Файл |
+|---|---|
+| `useInfiniteQuery` с `getNextPageParam` по полю `nextCursor` | `src/features/feed/model/usePosts.tsx` |
+| `fetchNext` вызывается через `onEndReached` у `FlatList` | `src/features/feed/ui/Feed.tsx` |
+| Индикатор загрузки следующей страницы в футере | `src/features/feed/ui/FeedListFooter.tsx` |
+
+Порог срабатывания `onEndReachedThreshold={0.5}` — подгрузка начинается, когда до конца списка остаётся половина видимой области.
+
+---
+
+### Pull-to-refresh
+
+| Что | Файл |
+|---|---|
+| `<RefreshControl refreshing={isRefetching} onRefresh={refetch}>` передан в `FlatList` | `src/features/feed/ui/Feed.tsx` |
+
+---
+
+### Закрытый пост (`tier: "paid"`) — заглушка вместо текста
+
+| Что | Файл |
+|---|---|
+| Поле `isPaid` вычисляется из `dto.tier === 'paid'` | `src/entities/post/model/post.mapper.ts` |
+| При `isLocked={true}` рендерится `<PostBodySkeleton>` вместо текста | `src/entities/post/ui/PostCard/PostCardBody.tsx` |
+| На обложке платного поста показывается оверлей с замком | `src/entities/post/ui/PostCard/PostCardCover.tsx` |
+| Нажатие на платный пост не открывает детальную страницу | `src/entities/post/ui/PostCard/PostCard.tsx` (проверка `post.isPaid` в `handleOnPress`) |
+
+---
+
+### Сообщение об ошибке «Не удалось загрузить публикации» с кнопкой повтора
+
+| Что | Файл |
+|---|---|
+| Полноэкранная ошибка при первой загрузке (заголовок + кнопка «Повторить») | `src/features/feed/ui/FeedError.tsx` |
+| Ошибка в футере списка при сбое подгрузки следующей страницы | `src/features/feed/ui/FeedFooterError.tsx` |
+| Логика выбора между полноэкранной ошибкой и футером | `src/features/feed/ui/Feed.tsx` |
+| Ошибка при отсутствии сети (offline) — показывается в футере | `src/features/feed/ui/Feed.tsx` (проверка `networkStore.isOnline`) |
+| Хук `usePosts` — `retry` колбэк, передаётся в кнопку повтора | `src/features/feed/model/usePosts.tsx` |
 
 **Ссылки:**
 - [Figma-макет](https://www.figma.com/design/bAxXrk7TaPN13TZ60yf7uD/Test-Assignment?node-id=0-1)
