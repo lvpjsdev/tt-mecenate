@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import { ScrollView, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
-import { ActionButton, Avatar, Text } from '@/shared/ui';
+import { ActionButton, Text } from '@/shared/ui';
 import { PostCardHeader } from '../PostCard/PostCardHeader';
 import { stylesheet } from './PostDetail.styles';
 import type { PostDetailProps } from './PostDetail.types';
@@ -25,7 +25,7 @@ export function PostDetail({
       contentContainerStyle={stylesheet.scrollContent}
       showsVerticalScrollIndicator={false}
     >
-      <View style={stylesheet.card}>
+      <View style={[stylesheet.card, { backgroundColor: theme.colors.background.default }]}>
         <PostCardHeader avatarUrl={authorAvatarUri} authorName={authorName} />
 
         <Image source={{ uri: imageUri }} contentFit="cover" style={stylesheet.postImage} />
