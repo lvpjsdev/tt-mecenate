@@ -16,6 +16,7 @@ export function PostDetail({
   likeCount,
   commentCount,
   isLiked = false,
+  onLike,
 }: PostDetailProps) {
   const theme = useTheme();
 
@@ -38,7 +39,7 @@ export function PostDetail({
         </View>
 
         <View style={stylesheet.actionsRow}>
-          <ActionButton type="like" count={likeCount} onPress={() => {}} active={isLiked} />
+          <ActionButton type="like" count={likeCount} onPress={onLike} active={isLiked} />
           <ActionButton type="comment" count={commentCount} />
         </View>
       </View>

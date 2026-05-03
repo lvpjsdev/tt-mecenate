@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { memo, useCallback } from 'react';
 import { Pressable } from 'react-native';
+import { useLike } from '../../api/useLike';
 import { Post } from '../../model/types';
 import { stylesheet } from './PostCard.styles';
 import { PostCardBody } from './PostCardBody';
@@ -9,13 +10,13 @@ import { PostCardHeader } from './PostCardHeader';
 
 export interface PostCardProps {
   post: Post;
-  onLike?: () => void;
   onComment?: () => void;
   onDonate?: () => void;
 }
 
-export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
+export function PostCard({ post, onComment, onDonate }: PostCardProps) {
   const router = useRouter();
+  const { mutate: toggleLike } = useLike(post.id);
 
   const handleOnPress = useCallback(() => {
     if (post.isPaid) {
@@ -42,7 +43,7 @@ export function PostCard({ post, onLike, onComment, onDonate }: PostCardProps) {
         likes={post.likes}
         comments={post.comments}
         isLiked={post.isLiked}
-        onLike={onLike}
+        onLike={toggleLike}
         onComment={onComment}
       />
     </Pressable>

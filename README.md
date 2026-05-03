@@ -126,6 +126,46 @@ Orval читает схему из локального файла `openapi.json
 | Ошибка при отсутствии сети (offline) — показывается в футере | `src/features/feed/ui/Feed.tsx` (проверка `networkStore.isOnline`) |
 | Хук `usePosts` — `retry` колбэк, передаётся в кнопку повтора | `src/features/feed/model/usePosts.tsx` |
 
+---
+
+### Лайки — optimistic update + подтверждение от сервера
+
+Лайк работает мгновенно на UI и затем синхронизируется с сервером. Поддерживается на экране ленты и на детальной странице поста.
+
+**Поток данных при нажатии кнопки лайка:**
+
+1. **`onMutate`** — до отправки запроса:
+   - отменяет фоновые рефетчи (`cancelQueries`), чтобы они не перезаписали optimistic update
+   - сохраняет снапшоты кэша детали и всех страниц ленты для возможного отката
+   - мгновенно обновляет `isLiked` и `likes` в кэше (`setQueryData` / `setQueriesData`)
+
+2. **HTTP `POST /posts/:id/like`** — уходит параллельно с обновлением UI.
+
+3. **`onSuccess`** — сервер возвращает `{ isLiked, likesCount }`:
+   - записывает точные значения в кэш детали через `setQueryData`
+   - если кэш списка существует — обновляет его через `setQueriesData`
+   - если кэш списка отсутствует (например, был вытеснен) — инвалидирует его, чтобы при возврате в ленту данные подтянулись с сервером
+   - без лишнего HTTP-запроса в штатном сценарии
+
+4. **WS-событие `like_updated`** — приходит через 1–3 секунды после запроса:
+   - обрабатывается в `useWsLikeUpdated`, пишет `likesCount` в кэш
+   - если данные уже совпадают с шага 3 — ре-рендера не происходит
+   - корректно обновляет счётчик при параллельных лайках от других пользователей
+
+5. **`onError`** — при сбое HTTP-запроса:
+   - откатывает кэш детали и ленты к снапшотам из шага 1
+   - WS-событие в этом случае не придёт
+
+| Что | Файл |
+|---|---|
+| Хук лайка (optimistic update, rollback, подтверждение) | `src/entities/post/api/useLike.ts` |
+| Подключение хука в карточке ленты | `src/entities/post/ui/PostCard/PostCard.tsx` |
+| Подключение хука на детальной странице | `src/features/post-with-comments/ui/ListHeader.tsx` |
+| WS-обработчик `like_updated` | `src/features/ws-realtime-updates/model/useWsLikeUpdated.ts` |
+| WS-менеджер (подключение, реконнект, роутинг событий) | `src/shared/api/ws-manager.ts` |
+
+---
+
 **Ссылки:**
 - [Figma-макет](https://www.figma.com/design/bAxXrk7TaPN13TZ60yf7uD/Test-Assignment?node-id=0-1)
 - [API (Swagger)](https://k8s.mectest.ru/test-app/openapi.json)
