@@ -2,6 +2,7 @@ import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query
 import { PostPage } from '@/features/feed/model/types';
 import { LikeResponseDTOData } from '@/shared/api/generated/mecenateTestAPI.schemas';
 import { postPostsIdLike } from '@/shared/api/generated/posts/posts';
+import { queryKeys } from '@/shared/api/queryKeys';
 import { Post } from '../model/types';
 
 const togglePostLike = (post: Post): Post => ({
@@ -19,8 +20,8 @@ const applyLikeResponse = (post: Post, data: LikeResponseDTOData): Post => ({
 export const useLike = (postId: string) => {
   const queryClient = useQueryClient();
 
-  const detailKey = ['posts', 'detail', postId];
-  const listKey = ['posts', 'list'];
+  const detailKey = queryKeys.posts.detail(postId);
+  const listKey = queryKeys.posts.lists();
 
   return useMutation({
     mutationFn: () => postPostsIdLike(postId),
