@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle, impactAsync } from 'expo-haptics';
 import { observer } from 'mobx-react-lite';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
@@ -17,7 +17,7 @@ export const SendCommentInput = observer(({ onSend }: SendCommentInputProps) => 
   const handleSend = async () => {
     if (isDisabled) return;
 
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await impactAsync(ImpactFeedbackStyle.Light);
     store.setIsLoading(true);
     try {
       await onSend(store.commentText);

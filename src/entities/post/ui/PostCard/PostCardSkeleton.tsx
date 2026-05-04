@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { tokens } from '@/shared/styles/tokens';
 import { SkeletonBox } from './SkeletonBox';

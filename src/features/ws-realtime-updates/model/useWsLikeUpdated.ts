@@ -1,7 +1,7 @@
 import { type InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { type Post } from '@/entities/post/model/types';
-import { type PostPage } from '@/features/feed/model/types';
+import type { Post } from '@/entities/post/model/types';
+import type { PostPage } from '@/features/feed/model/types';
 import { type WSEvent, wsManager } from '@/shared/api/ws-manager';
 
 export const useWsLikeUpdated = () => {

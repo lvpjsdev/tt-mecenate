@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { TierFilter } from '@/features/filter-tabs/model/types';
+import type { TierFilter } from '@/features/filter-tabs/model/types';
 
 const VALID_FILTERS: TierFilter[] = ['all', 'free', 'paid'];
 

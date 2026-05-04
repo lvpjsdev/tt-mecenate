@@ -3,7 +3,7 @@ import { useCallback, useMemo, useRef } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { filtersStore } from '@/core/stores/filters.store';
 import { networkStore } from '@/core/stores/network.store';
-import { Post } from '@/entities/post/model/types';
+import type { Post } from '@/entities/post/model/types';
 import { PostCardMemo } from '@/entities/post/ui/PostCard';
 import { tokens } from '@/shared/styles/tokens';
 import { ERROR_MESSAGES } from '@/shared/ui/errorDictionary';

@@ -1,4 +1,4 @@
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle, impactAsync } from 'expo-haptics';
 import { Pressable, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { ICON_SIZE, Icon } from '../Icon';
@@ -31,7 +31,7 @@ export function ActionButton({ type, count, active, disabled, onPress }: ActionB
 
   const handlePress = async () => {
     if (disabled) return;
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await impactAsync(ImpactFeedbackStyle.Light);
     onPress?.();
   };
 

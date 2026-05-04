@@ -3,7 +3,7 @@ import { toast } from 'burnt';
 import { postPostsIdComments } from '@/shared/api/generated/comments/comments';
 import { PostPostsIdCommentsBody } from '@/shared/api/generated/comments/comments.zod';
 import { queryKeys } from '@/shared/api/queryKeys';
-import { type UIError } from '@/shared/ui/uiErrors';
+import type { UIError } from '@/shared/ui/uiErrors';
 
 export const useSendComment = (postId: string) => {
   const queryClient = useQueryClient();

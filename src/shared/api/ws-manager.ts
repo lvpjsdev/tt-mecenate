@@ -39,7 +39,6 @@ export class WSManager {
     this.listeners.get(eventType)!.add(handler);
   }
 
-  // Врядли понадобится, но для симетричности пусть лучше будет
   off(eventType: WSEventType, handler: (e: WSEvent) => void) {
     this.listeners.get(eventType)?.delete(handler);
   }
