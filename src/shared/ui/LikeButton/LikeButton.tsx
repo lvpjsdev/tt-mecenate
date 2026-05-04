@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
+import { ImpactFeedbackStyle, impactAsync } from 'expo-haptics';
 import { useEffect, useRef } from 'react';
 import { Pressable, View } from 'react-native';
 import Animated, {
@@ -40,7 +40,7 @@ export function LikeButton({ count, active, disabled, onPress, testID }: LikeBut
 
   const handlePress = async () => {
     if (disabled) return;
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    await impactAsync(ImpactFeedbackStyle.Light);
     onPress?.();
   };
 

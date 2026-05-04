@@ -1,16 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/shared/api';
 import { getPostsId } from '@/shared/api/generated/posts/posts';
-import { UIError } from '@/shared/ui/uiErrors';
+import { ERROR_MESSAGES } from '@/shared/ui/errorDictionary';
+import type { UIError } from '@/shared/ui/uiErrors';
 import { mapPost } from '../model/post.mapper';
-import { Post } from '../model/types';
+import type { Post } from '../model/types';
 
 export const usePostById = (postId: string) => {
-  return useQuery<Post, UIError, Post, string[]>({
-    queryKey: ['posts', 'detail', postId],
+  return useQuery<Post, UIError, Post, ReturnType<typeof queryKeys.posts.detail>>({
+    queryKey: queryKeys.posts.detail(postId),
     queryFn: async ({ queryKey }) => {
       const response = await getPostsId(queryKey[2]);
       if (!response?.post) {
-        throw { type: 'unknown' } as UIError;
+        throw { type: 'unknown', uiText: ERROR_MESSAGES.unknown } satisfies UIError;
       }
 
       return mapPost(response.post);

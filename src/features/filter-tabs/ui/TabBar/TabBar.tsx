@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { TabItem } from '../TabItem';
@@ -12,14 +13,9 @@ export function TabBar<T extends string, U extends string>({
   const theme = useTheme();
   const borderColor = theme.colors.border.default;
 
-  return (
-    <View
-      style={[
-        stylesheet.container,
-        { borderColor, backgroundColor: theme.colors.background.default },
-      ]}
-    >
-      {tabs.map((tab) => (
+  const tabItems = useMemo(
+    () =>
+      tabs.map((tab) => (
         <View key={tab.key} style={{ flex: 1 }}>
           <TabItem
             label={tab.label}
@@ -27,7 +23,18 @@ export function TabBar<T extends string, U extends string>({
             onPress={() => onTabChange(tab.key)}
           />
         </View>
-      ))}
+      )),
+    [tabs, selectedKey, onTabChange],
+  );
+
+  return (
+    <View
+      style={[
+        stylesheet.container,
+        { borderColor, backgroundColor: theme.colors.background.default },
+      ]}
+    >
+      {tabItems}
     </View>
   );
 }

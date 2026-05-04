@@ -3,7 +3,7 @@ import { memo, useCallback } from 'react';
 import { Pressable } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { useLike } from '../../api/useLike';
-import { Post } from '../../model/types';
+import type { Post } from '../../model/types';
 import { stylesheet } from './PostCard.styles';
 import { PostCardBody } from './PostCardBody';
 import { PostCardCover } from './PostCardCover';

@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 import { tokens } from '@/shared/styles/tokens';
 
 export const stylesheet = StyleSheet.create({
-  image: {
-    borderRadius: tokens.borderRadius.full,
-    backgroundColor: tokens.palette.skeleton.base,
+  container: {
+    flex: 1,
+    backgroundColor: tokens.palette.neutral[0],
   },
 });

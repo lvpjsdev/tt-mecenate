@@ -10,7 +10,9 @@ export function SendComment() {
   return (
     <SendCommentInput
       onSend={async (text) => {
-        await mutateAsync(text);
+        await mutateAsync(text).catch(() => {
+          // Ошибка обрабатывается в onError хуке useSendComment
+        });
       }}
     />
   );

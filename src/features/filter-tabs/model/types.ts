@@ -1,3 +1,3 @@
-import { Tier } from '@/entities/post/model/types';
+import type { Tier } from '@/entities/post/model/types';
 
 export type TierFilter = 'all' | Tier;
