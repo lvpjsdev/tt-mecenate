@@ -16,10 +16,7 @@ export const SendCommentInput = observer(({ onSend }: SendCommentInputProps) => 
 
   const debouncedText = useDebounce(store.commentText, 300);
 
-  const isDisabled = useMemo(
-    () => debouncedText.trim() === '' || store.isLoading,
-    [debouncedText, store.isLoading],
-  );
+  const isDisabled = useMemo(() => debouncedText.trim() === '' || store.isLoading, [debouncedText]);
 
   const handleSend = async () => {
     if (isDisabled) return;
