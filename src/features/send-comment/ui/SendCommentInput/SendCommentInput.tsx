@@ -1,8 +1,10 @@
 import { ImpactFeedbackStyle, impactAsync } from 'expo-haptics';
 import { observer } from 'mobx-react-lite';
+import { useMemo } from 'react';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { postPostsIdCommentsBodyTextMax } from '@/shared/api/generated/comments/comments.zod';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 import { SendButton } from '@/shared/ui/SendButton';
 import { sendCommentStore } from '../../store/send-comment.store';
 import { stylesheet } from './SendCommentInput.styles';
@@ -12,7 +14,12 @@ export const SendCommentInput = observer(({ onSend }: SendCommentInputProps) => 
   const theme = useTheme();
   const store = sendCommentStore;
 
-  const isDisabled = store.commentText.trim() === '' || store.isLoading;
+  const debouncedText = useDebounce(store.commentText, 300);
+
+  const isDisabled = useMemo(
+    () => debouncedText.trim() === '' || store.isLoading,
+    [debouncedText, store.isLoading],
+  );
 
   const handleSend = async () => {
     if (isDisabled) return;
