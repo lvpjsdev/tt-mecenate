@@ -1,9 +1,11 @@
-const RETRY_BASE_DELAY_MS = 1000;
-const RETRY_EXPONENTIAL_BASE = 2;
-const RETRY_MAX_DELAY_MS = 30_000;
-const RETRY_JITTER_MS = 300;
+import type { BackoffConfig } from '@/shared/config/backoff.config';
+import { HTTP_BACKOFF_CONFIG } from '@/shared/config/backoff.config';
 
-// Получение возрастающей задержки с jitter для повторных попыток
-export const getRetryDelay = (attempt: number) =>
-  Math.min(RETRY_BASE_DELAY_MS * RETRY_EXPONENTIAL_BASE ** attempt, RETRY_MAX_DELAY_MS) +
-  Math.random() * RETRY_JITTER_MS;
+export const createExponentialBackoff = (config: BackoffConfig) => {
+  const { baseDelayMs, exponentialBase, maxDelayMs, jitterMs } = config;
+
+  return (attempt: number): number =>
+    Math.min(baseDelayMs * exponentialBase ** attempt, maxDelayMs) + Math.random() * jitterMs;
+};
+
+export const getRetryDelay = createExponentialBackoff(HTTP_BACKOFF_CONFIG);

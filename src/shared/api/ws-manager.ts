@@ -1,4 +1,6 @@
+import { createExponentialBackoff } from '@/core/utils';
 import type { CommentDTO } from '@/shared/api/generated/mecenateTestAPI.schemas';
+import { WS_BACKOFF_CONFIG } from '../config/backoff.config';
 import { env } from '../config/env';
 
 export type WSEventType = 'ping' | 'like_updated' | 'comment_added';
@@ -8,17 +10,7 @@ export type WSEvent =
   | { type: 'like_updated'; postId: string; likesCount: number }
   | { type: 'comment_added'; postId: string; comment: CommentDTO };
 
-const WS_RECONNECT_BASE_DELAY = 500; // 500ms начальная задержка
-const WS_RECONNECT_EXPONENTIAL_BASE = 2;
-const WS_RECONNECT_MAX_DELAY = 10_000; // 10 секунд максимум
-const WS_RECONNECT_JITTER = 200; // 200ms jitter для предотвращения синхронных попыток
-
-const getWsReconnectDelay = (attempt: number) =>
-  Math.min(
-    WS_RECONNECT_BASE_DELAY * WS_RECONNECT_EXPONENTIAL_BASE ** attempt,
-    WS_RECONNECT_MAX_DELAY,
-  ) +
-  Math.random() * WS_RECONNECT_JITTER;
+const getWsReconnectDelay = createExponentialBackoff(WS_BACKOFF_CONFIG);
 
 export class WSManager {
   private ws: WebSocket | null = null;
