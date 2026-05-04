@@ -1,8 +1,8 @@
 import { type InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { PostPage } from '@/features/feed/model/types';
+import { queryKeys } from '@/shared/api';
 import type { LikeResponseDTOData } from '@/shared/api/generated/mecenateTestAPI.schemas';
 import { postPostsIdLike } from '@/shared/api/generated/posts/posts';
-import { queryKeys } from '@/shared/api/queryKeys';
 import type { Post } from '../model/types';
 
 const togglePostLike = (post: Post): Post => ({

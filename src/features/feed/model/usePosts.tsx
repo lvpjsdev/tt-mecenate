@@ -1,8 +1,8 @@
 import { type InfiniteData, keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { mapPost } from '@/entities/post/model/post.mapper';
 import type { TierFilter } from '@/features/filter-tabs/model/types';
+import { queryKeys } from '@/shared/api';
 import { getPosts } from '@/shared/api/generated/posts/posts';
-import { queryKeys } from '@/shared/api/queryKeys';
 import type { UIError } from '@/shared/ui/uiErrors';
 import type { PostPage } from './types';
 

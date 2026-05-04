@@ -16,7 +16,7 @@ import { setupReactions } from '@/core/stores/reactions';
 import { ThemeProvider } from '@/core/theme/ThemeProvider';
 import { getRetryDelay } from '@/core/utils';
 import { useWsCommentAdded, useWsLikeUpdated } from '@/features/ws-realtime-updates';
-import { wsManager } from '@/shared/api/ws-manager';
+import { wsManager } from '@/shared/api';
 import { EmptyState } from '@/shared/ui/EmptyState';
 
 function AppProviders() {

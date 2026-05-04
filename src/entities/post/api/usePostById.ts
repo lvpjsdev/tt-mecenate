@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/shared/api';
 import { getPostsId } from '@/shared/api/generated/posts/posts';
-import { queryKeys } from '@/shared/api/queryKeys';
 import { ERROR_MESSAGES } from '@/shared/ui/errorDictionary';
 import type { UIError } from '@/shared/ui/uiErrors';
 import { mapPost } from '../model/post.mapper';

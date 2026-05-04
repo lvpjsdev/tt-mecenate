@@ -27,14 +27,11 @@ export interface PostDTO {
   id?: string;
   author?: AuthorDTO;
   title?: string;
-  /** Full text. Empty string for paid posts. */
   body?: string;
-  /** Short preview up to 120 chars */
   preview?: string;
   coverUrl?: string;
   likesCount?: number;
   commentsCount?: number;
-  /** Whether current user liked this post */
   isLiked?: boolean;
   tier?: PostDTOTier;
   createdAt?: string;
@@ -50,7 +47,6 @@ export interface CommentDTO {
 
 export type PostsResponseDTOData = {
   posts?: PostDTO[];
-  /** @nullable */
   nextCursor?: string | null;
   hasMore?: boolean;
 };
@@ -81,7 +77,6 @@ export interface LikeResponseDTO {
 
 export type CommentsResponseDTOData = {
   comments?: CommentDTO[];
-  /** @nullable */
   nextCursor?: string | null;
   hasMore?: boolean;
 };
@@ -110,43 +105,18 @@ export interface ErrorResponseDTO {
   error?: ErrorResponseDTOError;
 }
 
-/**
- * Invalid or missing UUID token
- */
 export type UnauthorizedResponse = ErrorResponseDTO;
 
-/**
- * Resource not found
- */
 export type NotFoundResponse = ErrorResponseDTO;
 
-/**
- * Request body validation failed
- */
 export type ValidationErrorResponse = ErrorResponseDTO;
 
-/**
- * Internal server error
- */
 export type InternalErrorResponse = ErrorResponseDTO;
 
 export type GetPostsParams = {
-/**
- * Number of posts (max 20)
- * @maximum 20
- */
 limit?: number;
-/**
- * ID of the last received post
- */
 cursor?: string;
-/**
- * Filter by tier: free or paid
- */
 tier?: GetPostsTier;
-/**
- * Return 500 for error handling testing
- */
 simulate_error?: boolean;
 };
 
@@ -159,21 +129,11 @@ export const GetPostsTier = {
 } as const;
 
 export type GetPostsIdCommentsParams = {
-/**
- * Number of comments
- */
 limit?: number;
-/**
- * Cursor for pagination
- */
 cursor?: string;
 };
 
 export type PostPostsIdCommentsBody = {
-  /**
-     * @minLength 1
-     * @maxLength 500
-     */
   text: string;
 };
 

@@ -9,9 +9,9 @@ class NetworkStore {
     makeAutoObservable(
       this,
       {
-        setOnline: true, // явный action
-        init: false, // не action — side-effect метод инициализации
-        destroy: false, // не action — side-effect метод очистки
+        setOnline: true,
+        init: false,
+        destroy: false,
       },
       { autoBind: true },
     );

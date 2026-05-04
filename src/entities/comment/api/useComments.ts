@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/shared/api';
 import { getPostsIdComments } from '@/shared/api/generated/comments/comments';
-import { queryKeys } from '@/shared/api/queryKeys';
 import { mapComment } from '../model/comment.mapper';
 
 export const useComments = (postId: string) => {
