@@ -1,4 +1,3 @@
-// TODO: При выпуске финального релиза заменить на экспорт шрифтов через Expo Config Plugin
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
 import {
   Manrope_400Regular,
@@ -26,7 +25,7 @@ function AppProviders() {
   return null;
 }
 
-const QUERY_STALE_TIME_MS = 1000 * 60 * 5; // 5 minutes
+const QUERY_STALE_TIME_MS = 1000 * 60 * 5;
 const QUERY_RETRY_COUNT = 3;
 const MUTATION_RETRY_COUNT = 1;
 
