@@ -38,14 +38,12 @@ export function TextShowMore({
 
   return (
     <View style={stylesheet.container}>
-      {/* Скрытый View для измерения количества строк */}
       <View style={stylesheet.hiddenText} pointerEvents="none">
         <Text variant="body" color={theme.colors.text.primary} onTextLayout={handleTextLayout}>
           {text}
         </Text>
       </View>
 
-      {/* Видимый текст — обрезан или полный */}
       <Text variant="body" color={theme.colors.text.primary} numberOfLines={visibleLines}>
         {text}
       </Text>

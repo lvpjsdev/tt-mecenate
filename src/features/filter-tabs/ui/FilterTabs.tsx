@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { filtersStore } from '@/core/stores/filters.store';
-import { TierFilter } from '../model/types';
-import { Tab, TabBar } from './TabBar';
+import type { TierFilter } from '../model/types';
+import { type Tab, TabBar } from './TabBar';
 
 const tabs: Tab<TierFilter>[] = [
   { key: 'all', label: 'Все' },

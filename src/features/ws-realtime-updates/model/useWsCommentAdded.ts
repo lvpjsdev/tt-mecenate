@@ -1,14 +1,14 @@
 import { type InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { mapComment } from '@/entities/comment/model/comment.mapper';
-import { type Comment } from '@/entities/comment/model/types';
-import { type Post } from '@/entities/post/model/types';
-import { type PostPage } from '@/features/feed/model/types';
-import {
-  type CommentDTO,
-  type CommentsResponseDTOData,
+import type { Comment } from '@/entities/comment/model/types';
+import type { Post } from '@/entities/post/model/types';
+import type { PostPage } from '@/features/feed/model/types';
+import { type WSEvent, wsManager } from '@/shared/api';
+import type {
+  CommentDTO,
+  CommentsResponseDTOData,
 } from '@/shared/api/generated/mecenateTestAPI.schemas';
-import { type WSEvent, wsManager } from '@/shared/api/ws-manager';
 
 export type CommentsPage = CommentsResponseDTOData & { comments: Comment[] };
 

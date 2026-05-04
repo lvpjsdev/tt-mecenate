@@ -192,30 +192,8 @@
           "correctness": { "noUndeclaredVariables": "off", "noUnusedVariables": "warn" },
           "style": {
             "noCommonJs": "warn",
-            "useConsistentArrayType": { "level": "warn", "options": { "syntax": "shorthand" } }
-          },
-          "suspicious": {
-            "noDuplicateClassMembers": "error",
-            "noExtraNonNullAssertion": "warn",
-            "noRedeclare": "warn"
-          }
-        }
-      }
-    },
-    { "includes": ["*.web.*"] },
-    { "includes": ["**/*.d.ts"], "linter": { "rules": {} } },
-    { "includes": ["**/metro.config.js"], "javascript": { "globals": ["exports"] } },
-    { "includes": ["**/*.js", "**/*.jsx"] },
-    {
-      "includes": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
-      "javascript": { "globals": [] },
-      "linter": {
-        "rules": {
-          "complexity": { "noBannedTypes": "warn", "noUselessConstructor": "warn" },
-          "correctness": { "noUndeclaredVariables": "off", "noUnusedVariables": "warn" },
-          "style": {
-            "noCommonJs": "warn",
-            "useConsistentArrayType": { "level": "warn", "options": { "syntax": "shorthand" } }
+            "useConsistentArrayType": { "level": "warn", "options": { "syntax": "shorthand" } },
+            "useImportType": "error"
           },
           "suspicious": {
             "noDuplicateClassMembers": "error",

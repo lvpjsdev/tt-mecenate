@@ -6,25 +6,36 @@ class NetworkStore {
   unsubscribe?: () => void;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(
+      this,
+      {
+        setOnline: true,
+        init: false,
+        destroy: false,
+      },
+      { autoBind: true },
+    );
     this.init();
   }
 
   init() {
     this.unsubscribe = NetInfo.addEventListener((state) => {
-      //смотрим и не только на коннект но и доступность интернета
+      // Смотрим не только на коннект, но и на доступность интернета
       const isOnline = Boolean(state.isConnected && state.isInternetReachable);
-
       this.setOnline(isOnline);
     });
   }
 
-  setOnline(online: boolean) {
+  setOnline(online: boolean): void {
+    if (typeof online !== 'boolean') {
+      console.warn(`[NetworkStore] setOnline expects boolean, got: ${typeof online}`);
+      return;
+    }
     this.isOnline = online;
   }
 
-  //Не думаю что понадобиться, но лучше сохранить симетричность
-  destroy() {
+  // Не думаю что понадобится, но лучше сохранить симметричность
+  destroy(): void {
     this.unsubscribe?.();
   }
 }

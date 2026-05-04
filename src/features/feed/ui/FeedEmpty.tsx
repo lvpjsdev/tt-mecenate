@@ -1,5 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { EmptyState } from '@/shared/ui';
+import { stylesheet } from './FeedEmpty.styles';
 
 interface FeedEmptyProps {
   onReset: () => void;
@@ -7,7 +8,7 @@ interface FeedEmptyProps {
 
 export function FeedEmpty({ onReset }: FeedEmptyProps) {
   return (
-    <View style={styles.container}>
+    <View style={stylesheet.container}>
       <EmptyState
         title="По вашему запросу ничего нет"
         action={{
@@ -18,11 +19,3 @@ export function FeedEmpty({ onReset }: FeedEmptyProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

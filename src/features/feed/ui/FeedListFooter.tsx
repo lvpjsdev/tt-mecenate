@@ -1,5 +1,5 @@
 import { Loader } from '@/shared/ui/Loader';
-import { type UIError } from '@/shared/ui/uiErrors';
+import type { UIError } from '@/shared/ui/uiErrors';
 import { FeedFooterError } from './FeedFooterError';
 
 interface FeedListFooterProps {
