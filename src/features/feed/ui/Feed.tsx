@@ -1,19 +1,19 @@
 import { observer } from 'mobx-react-lite';
 import { useCallback, useMemo, useRef } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { filtersStore } from '@/core/stores/filters.store';
 import { networkStore } from '@/core/stores/network.store';
 import type { Post } from '@/entities/post/model/types';
 import { PostCardMemo } from '@/entities/post/ui/PostCard';
-import { tokens } from '@/shared/styles/tokens';
 import { ERROR_MESSAGES } from '@/shared/ui/errorDictionary';
 import { usePosts } from '../model/usePosts';
+import { stylesheet } from './Feed.styles';
 import { FeedEmpty } from './FeedEmpty';
 import { FeedError } from './FeedError';
 import { FeedListFooter } from './FeedListFooter';
 import { FeedSkeleton } from './FeedSkeleton';
 
-const ListSeparatorComponent = () => <View style={styles.listGap} />;
+const ListSeparatorComponent = () => <View style={stylesheet.listGap} />;
 
 function FeedComponent() {
   const tier = filtersStore.activeFilter;
@@ -72,7 +72,7 @@ function FeedComponent() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={stylesheet.container}>
       <FlatList
         data={posts}
         keyExtractor={(item) => String(item.id)}
@@ -86,15 +86,5 @@ function FeedComponent() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: tokens.palette.neutral[50],
-  },
-  listGap: {
-    height: tokens.spacing.xl,
-  },
-});
 
 export const Feed = observer(FeedComponent);

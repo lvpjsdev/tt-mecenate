@@ -1,13 +1,13 @@
 import { memo, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { useTheme } from '@/core/theme/ThemeProvider';
 import { useLike } from '@/entities/post/api/useLike';
 import { usePostById } from '@/entities/post/api/usePostById';
 import { PostDetail } from '@/entities/post/ui/PostDetail';
-import { tokens } from '@/shared/styles/tokens';
 import { EmptyState, LinkButton, Text } from '@/shared/ui';
 import { Loader } from '@/shared/ui/Loader';
 import { getCommentSuffix } from '../utils';
+import { stylesheet } from './ListHeader.styles';
 
 export function ListHeader({ postId }: { postId: string }) {
   const theme = useTheme();
@@ -70,15 +70,5 @@ export function ListHeader({ postId }: { postId: string }) {
     </View>
   );
 }
-
-const stylesheet = StyleSheet.create({
-  commentsHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: tokens.spacing.xs,
-    paddingHorizontal: tokens.spacing.xl,
-  },
-});
 
 export const ListHeaderMemo = memo(ListHeader);
