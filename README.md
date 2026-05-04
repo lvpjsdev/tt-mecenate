@@ -407,78 +407,16 @@ function AppProviders() {
 
 ---
 
-### Валидация переменных окружения (Zod)
-
-Все `EXPO_PUBLIC_*` переменные валидируются через Zod при старте приложения в `src/shared/config/env.ts`. Если хотя бы одна переменная отсутствует или имеет неверный формат — приложение падает с читаемым сообщением ещё до монтирования первого компонента.
-
-```ts
-// src/shared/config/env.ts
-const envSchema = z.object({
-  EXPO_PUBLIC_API_URL:   z.string().url(),
-  EXPO_PUBLIC_WS_URL:    z.string().regex(/^wss?:\/\//),
-  EXPO_PUBLIC_API_TOKEN: z.string().min(1),
-});
-
-export const env = parseEnv(); // бросает при невалидных значениях
-```
-
-Тип `Env` выводится через `z.infer<typeof envSchema>` — дублирования нет. `client.ts` и `ws-manager.ts` импортируют `env` вместо `process.env.*`, что убирает необходимость в `!` non-null assertions.
-
-**Почему не AsyncStorage?** `EXPO_PUBLIC_*` переменные встраиваются в бандл на этапе сборки через Metro и доступны синхронно. AsyncStorage предназначен для данных, которые меняются в рантайме (токены авторизации пользователя, настройки). Для статичной конфигурации сборки он избыточен.
-
-**Токен в env — временное решение.** `EXPO_PUBLIC_API_TOKEN` содержит UUID пользователя, который используется как Bearer-токен для HTTP и как `?token=` параметр для WebSocket. Это сделано намеренно: регистрация и управление пользователями в рамках задания не реализованы. В продакшне токен должен выдаваться сервером после аутентификации и храниться в защищённом хранилище (например, `expo-secure-store`).
-
-| Файл | Роль |
-|---|---|
-| `src/shared/config/env.ts` | Zod-схема, парсинг и экспорт типизированного `env` |
-| `src/shared/api/client.ts` | Использует `env.EXPO_PUBLIC_API_URL` и `env.EXPO_PUBLIC_API_TOKEN` |
-| `src/shared/api/ws-manager.ts` | Использует `env.EXPO_PUBLIC_WS_URL` и `env.EXPO_PUBLIC_API_TOKEN` |
-
 ---
 
-### HTTP-клиент и нормализация ответов
+## Documentation
 
-Axios-клиент (`src/shared/api/client.ts`) настроен с двумя интерсепторами:
-
-- **Request interceptor** — добавляет `Authorization: Bearer <token>` из env к каждому запросу.
-- **Response interceptor** — нормализует ошибки через `normalizeError`, чтобы все слои приложения работали с единым типом ошибки.
-
-Orval генерирует функции, которые используют `customClient` — обёртку над `apiClient`. `customClient` разворачивает вложенный ответ `{ ok, data }` и возвращает только `data`, избавляя каждый хук от ручного `response.data.data`.
+| Документ | Описание |
+|----------|----------|
+| [API.md](./docs/API.md) | Эндпоинты, типы DTO, WebSocket |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Архитектура слоёв, WebSocket, optimistic updates |
 
 ---
-
-### Конфигурация React Query
-
-`QueryClient` создаётся один раз в `_layout.tsx` со следующими дефолтами:
-
-| Параметр | Значение | Причина |
-|---|---|---|
-| `staleTime` | 5 минут | Данные ленты не меняются чаще — WS-события обновляют кэш точечно, без рефетча |
-| `retry` (queries) | 3 | Сетевые сбои на мобильных устройствах временны |
-| `retryDelay` | экспоненциальный backoff (1 с → 30 с) + jitter ±300 мс | Предотвращает шторм запросов при восстановлении сети |
-| `retry` (mutations) | 1 | Мутации идемпотентны (лайк) или имеют side-effect (комментарий) — агрессивный ретрай нежелателен |
-
----
-
-### Синхронизация сетевого статуса (MobX ↔ React Query)
-
-`networkStore` подписывается на `NetInfo` и отслеживает не только `isConnected`, но и `isInternetReachable` — это важно для мобильных сетей, где устройство подключено к Wi-Fi, но интернет недоступен.
-
-`setupReactions()` создаёт MobX-реакцию, которая при каждом изменении `networkStore.isOnline` вызывает `onlineManager.setOnline(isOnline)`. Это позволяет React Query автоматически:
-- приостанавливать запросы в offline-режиме;
-- возобновлять их и рефетчить устаревшие данные при восстановлении сети.
-
-Реакция монтируется в `_layout.tsx` через `useEffect(() => setupReactions(), [])` и возвращает функцию отписки, которая вызывается при размонтировании.
-
----
-
-**Ссылки:**
-- [Figma-макет](https://www.figma.com/design/bAxXrk7TaPN13TZ60yf7uD/Test-Assignment?node-id=0-1)
-- [API (Swagger)](https://k8s.mectest.ru/test-app/openapi.json)
-
----
-
-## Стек
 
 | Категория        | Технология                          |
 |------------------|-------------------------------------|
