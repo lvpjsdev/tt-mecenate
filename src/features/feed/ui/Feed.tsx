@@ -6,6 +6,7 @@ import { networkStore } from '@/core/stores/network.store';
 import { Post } from '@/entities/post/model/types';
 import { PostCardMemo } from '@/entities/post/ui/PostCard';
 import { tokens } from '@/shared/styles/tokens';
+import { ERROR_MESSAGES } from '@/shared/ui/errorDictionary';
 import { usePosts } from '../model/usePosts';
 import { FeedEmpty } from './FeedEmpty';
 import { FeedError } from './FeedError';
@@ -24,8 +25,6 @@ function FeedComponent() {
 
   const isOffline = !networkStore.isOnline;
 
-  // Запоминаем последнюю ошибку, чтобы не мигать скелетоном
-  // пока идёт повторный запрос (error на момент рефетча может быть null)
   const lastErrorRef = useRef(error);
   if (error) lastErrorRef.current = error;
 
@@ -37,7 +36,13 @@ function FeedComponent() {
 
   const renderListFooterComponent = useCallback(() => {
     if (isOffline) {
-      return <FeedListFooter isLoading={false} error={{ type: 'network' }} onRetry={retry} />;
+      return (
+        <FeedListFooter
+          isLoading={false}
+          error={{ type: 'network', uiText: ERROR_MESSAGES.network }}
+          onRetry={retry}
+        />
+      );
     }
 
     return (
