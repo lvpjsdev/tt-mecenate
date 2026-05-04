@@ -1,4 +1,5 @@
 import type { CommentDTO } from '@/shared/api/generated/mecenateTestAPI.schemas';
+import { env } from '../config/env';
 
 export type WSEventType = 'ping' | 'like_updated' | 'comment_added';
 
@@ -96,7 +97,4 @@ export class WSManager {
   }
 }
 
-export const wsManager = new WSManager(
-  process.env.EXPO_PUBLIC_WS_URL!,
-  process.env.EXPO_PUBLIC_API_TOKEN!,
-);
+export const wsManager = new WSManager(env.EXPO_PUBLIC_WS_URL, env.EXPO_PUBLIC_API_TOKEN);

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'burnt';
 import { postPostsIdComments } from '@/shared/api/generated/comments/comments';
 import { PostPostsIdCommentsBody } from '@/shared/api/generated/comments/comments.zod';
 
@@ -13,5 +14,13 @@ export const useSendComment = (postId: string) => {
       return postPostsIdComments(postId, body);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey }),
+    onError: () => {
+      toast({
+        title: 'Не удалось отправить комментарий',
+        message: 'Попробуйте ещё раз',
+        preset: 'error',
+        duration: 3,
+      });
+    },
   });
 };

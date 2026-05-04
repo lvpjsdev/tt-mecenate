@@ -1,8 +1,9 @@
 import Axios, { type AxiosRequestConfig } from 'axios';
+import { env } from '../config/env';
 import { normalizeError } from '../ui/uiErrors';
 
 export const apiClient = Axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL,
+  baseURL: env.EXPO_PUBLIC_API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -10,7 +11,7 @@ export const apiClient = Axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  const token = process.env.EXPO_PUBLIC_API_TOKEN;
+  const token = env.EXPO_PUBLIC_API_TOKEN;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
