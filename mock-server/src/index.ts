@@ -1,14 +1,14 @@
-import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { createServer } from 'http';
-import { WebSocketServer, WebSocket } from 'ws';
-import { IncomingMessage } from 'http';
+import { Hono } from 'hono';
+import { createServer, ServerResponse } from 'http';
+import type { IncomingMessage } from 'http';
+import { WebSocket, WebSocketServer } from 'ws';
 import {
-  posts,
-  authors,
-  getPostById,
-  getCommentsByPostId,
   addComment,
+  authors,
+  getCommentsByPostId,
+  getPostById,
+  posts,
   toggleLike,
   validateUUID,
   wsClients,
@@ -21,16 +21,22 @@ const authMiddleware = async (c: any, next: any) => {
   const authHeader = c.req.header('Authorization');
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return c.json(
-      { ok: false, error: { code: 'UNAUTHORIZED', message: 'Missing or invalid UUID token' } },
-      401
+      {
+        ok: false,
+        error: { code: 'UNAUTHORIZED', message: 'Missing or invalid UUID token' },
+      },
+      401,
     );
   }
 
   const token = authHeader.split(' ')[1];
   if (!validateUUID(token)) {
     return c.json(
-      { ok: false, error: { code: 'UNAUTHORIZED', message: 'Invalid UUID token' } },
-      401
+      {
+        ok: false,
+        error: { code: 'UNAUTHORIZED', message: 'Invalid UUID token' },
+      },
+      401,
     );
   }
 
@@ -47,19 +53,22 @@ app.get('/test-app/posts', authMiddleware, (c) => {
 
   if (simulateError) {
     return c.json(
-      { ok: false, error: { code: 'INTERNAL_ERROR', message: 'Internal server error (simulated)' } },
-      500
+      {
+        ok: false,
+        error: { code: 'INTERNAL_ERROR', message: 'Internal server error (simulated)' },
+      },
+      500,
     );
   }
 
   let filteredPosts = [...posts];
 
   if (tier) {
-    filteredPosts = filteredPosts.filter((p) => p.tier === tier);
+    filteredPosts = filteredPosts.filter((p: any) => p.tier === tier);
   }
 
   if (cursor) {
-    const cursorIndex = filteredPosts.findIndex((p) => p.id === cursor);
+    const cursorIndex = filteredPosts.findIndex((p: any) => p.id === cursor);
     if (cursorIndex >= 0) {
       filteredPosts = filteredPosts.slice(cursorIndex + 1);
     }
@@ -67,7 +76,9 @@ app.get('/test-app/posts', authMiddleware, (c) => {
 
   const hasMore = filteredPosts.length > limit;
   const paginatedPosts = filteredPosts.slice(0, limit);
-  const nextCursor = hasMore ? paginatedPosts[paginatedPosts.length - 1]?.id || null : null;
+  const nextCursor = hasMore
+    ? paginatedPosts[paginatedPosts.length - 1]?.id || null
+    : null;
 
   return c.json({
     ok: true,
@@ -86,8 +97,11 @@ app.get('/test-app/posts/:id', authMiddleware, (c) => {
 
   if (!post) {
     return c.json(
-      { ok: false, error: { code: 'NOT_FOUND', message: 'Post not found' } },
-      404
+      {
+        ok: false,
+        error: { code: 'NOT_FOUND', message: 'Post not found' },
+      },
+      404,
     );
   }
 
@@ -97,17 +111,20 @@ app.get('/test-app/posts/:id', authMiddleware, (c) => {
 // POST /posts/:id/like - лайк/анлайк
 app.post('/test-app/posts/:id/like', authMiddleware, (c) => {
   const postId = c.req.param('id');
-  const userId = c.get('userId');
+  const _userId = c.get('userId');
 
   const post = getPostById(postId);
   if (!post) {
     return c.json(
-      { ok: false, error: { code: 'NOT_FOUND', message: 'Post not found' } },
-      404
+      {
+        ok: false,
+        error: { code: 'NOT_FOUND', message: 'Post not found' },
+      },
+      404,
     );
   }
 
-  const result = toggleLike(postId, userId);
+  const result = toggleLike(postId, _userId);
 
   // Задержка 1-3 секунды перед отправкой WS события
   const delay = 1000 + Math.random() * 2000;
@@ -136,12 +153,19 @@ app.get('/test-app/posts/:id/comments', authMiddleware, (c) => {
   const post = getPostById(postId);
   if (!post) {
     return c.json(
-      { ok: false, error: { code: 'NOT_FOUND', message: 'Post not found' } },
-      404
+      {
+        ok: false,
+        error: { code: 'NOT_FOUND', message: 'Post not found' },
+      },
+      404,
     );
   }
 
-  const { comments, nextCursor, hasMore } = getCommentsByPostId(postId, limit, cursor);
+  const { comments, nextCursor, hasMore } = getCommentsByPostId(
+    postId,
+    limit,
+    cursor,
+  );
 
   return c.json({
     ok: true,
@@ -152,29 +176,38 @@ app.get('/test-app/posts/:id/comments', authMiddleware, (c) => {
 // POST /posts/:id/comments - добавление комментария
 app.post('/test-app/posts/:id/comments', authMiddleware, async (c) => {
   const postId = c.req.param('id');
-  const userId = c.get('userId');
+  const _userId = c.get('userId');
   const body = await c.req.json().catch(() => null);
 
   if (!body || !body.text || typeof body.text !== 'string') {
     return c.json(
-      { ok: false, error: { code: 'VALIDATION_ERROR', message: 'Text is required' } },
-      400
+      {
+        ok: false,
+        error: { code: 'VALIDATION_ERROR', message: 'Text is required' },
+      },
+      400,
     );
   }
 
   const text = body.text.trim();
   if (text.length < 1 || text.length > 500) {
     return c.json(
-      { ok: false, error: { code: 'VALIDATION_ERROR', message: 'Text must be 1-500 characters' } },
-      400
+      {
+        ok: false,
+        error: { code: 'VALIDATION_ERROR', message: 'Text must be 1-500 characters' },
+      },
+      400,
     );
   }
 
   const post = getPostById(postId);
   if (!post) {
     return c.json(
-      { ok: false, error: { code: 'NOT_FOUND', message: 'Post not found' } },
-      404
+      {
+        ok: false,
+        error: { code: 'NOT_FOUND', message: 'Post not found' },
+      },
+      404,
     );
   }
 
@@ -202,11 +235,22 @@ app.post('/test-app/posts/:id/comments', authMiddleware, async (c) => {
   return c.json({ ok: true, data: { comment: newComment } }, 201);
 });
 
-// Настройка HTTP сервера с WebSocket
+// Настройка сервера
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
-const httpServer = createServer();
 
-// Настройка WebSocket сервера
+// Запускаем Hono сервер и получаем доступ к HTTP серверу
+const server = serve({
+  fetch: app.fetch,
+  port,
+}, (info) => {
+  console.log(`Mock server running on http://localhost:${info.port}`);
+  console.log(`REST API: http://localhost:${info.port}/test-app/posts`);
+  console.log(
+    `WS endpoint: ws://localhost:${info.port}/test-app/ws?token=YOUR_UUID`,
+  );
+});
+
+// Настройка WebSocket сервера на том же HTTP сервере
 const wss = new WebSocketServer({ noServer: true });
 
 // Пинг каждые 30 секунд
@@ -220,7 +264,7 @@ const pingInterval = setInterval(() => {
 }, 30000);
 
 // Обработка WebSocket подключений
-httpServer.on('upgrade', (request: IncomingMessage, socket: any, head: Buffer) => {
+server.on('upgrade', (request: IncomingMessage, socket: any, head: Buffer) => {
   const url = new URL(request.url || '', `http://${request.headers.host}`);
   const pathname = url.pathname;
 
@@ -254,27 +298,16 @@ wss.on('connection', (ws: WebSocket, request: IncomingMessage, token: string) =>
     console.log(`WS disconnected: ${token}, total clients: ${wsClients.size}`);
   });
 
-  ws.on('error', (err) => {
+  ws.on('error', (err: Error) => {
     console.error('WS error:', err);
     wsClients.delete(ws);
   });
-});
-
-// Запуск сервера
-httpServer.on('request', (req, res) => {
-  app.fetch(req, res);
-});
-
-httpServer.listen(port, () => {
-  console.log(`Mock server running on http://localhost:${port}`);
-  console.log(`REST API: http://localhost:${port}/test-app/posts`);
-  console.log(`WS endpoint: ws://localhost:${port}/test-app/ws?token=YOUR_UUID`);
 });
 
 // Очистка при завершении
 process.on('SIGINT', () => {
   clearInterval(pingInterval);
   wss.close();
-  httpServer.close();
+  server.close();
   process.exit(0);
 });

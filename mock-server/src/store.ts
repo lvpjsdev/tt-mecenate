@@ -78,16 +78,23 @@ export const posts: Post[] = Array.from({ length: 25 }, (_, i) => {
     id: `post_${id}`,
     author,
     title: `Пост номер ${id}`,
-    body: isPaid ? '' : `Это полный текст поста номер ${id}. Здесь может быть любой контент: текст, картинки, видео и многое другое.`,
-    preview: `Краткий предпросмотр поста номер ${id}. Это сокращенная версия...`.slice(0, 120),
+    body: isPaid
+      ? ''
+      : `Это полный текст поста номер ${id}. Здесь может быть любой контент: текст, картинки, видео и многое другое.`,
+    preview: `Краткий предпросмотр поста номер ${id}. Это сокращенная версия...`.slice(
+      0,
+      120,
+    ),
     coverUrl: `https://s3.regru.cloud/mecenate-test-picture/pic${id}.jpeg`,
     likesCount: Math.floor(Math.random() * 500),
     commentsCount: Math.floor(Math.random() * 50),
     isLiked: false,
-    tier: isPaid ? 'paid' as const : 'free' as const,
+    tier: isPaid ? ('paid' as const) : ('free' as const),
     createdAt,
   };
-}).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}).sort(
+  (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+);
 
 export const comments: Comment[] = [];
 
@@ -124,7 +131,11 @@ export function getPostById(id: string): Post | undefined {
   return posts.find((p) => p.id === id);
 }
 
-export function getCommentsByPostId(postId: string, limit = 20, cursor?: string): { comments: Comment[]; nextCursor: string | null; hasMore: boolean } {
+export function getCommentsByPostId(
+  postId: string,
+  limit = 20,
+  cursor?: string,
+): { comments: Comment[]; nextCursor: string | null; hasMore: boolean } {
   let filtered = comments.filter((c) => c.postId === postId);
 
   if (cursor) {
@@ -136,14 +147,20 @@ export function getCommentsByPostId(postId: string, limit = 20, cursor?: string)
 
   const hasMore = filtered.length > limit;
   const paginated = filtered.slice(0, limit);
-  const nextCursor = hasMore ? paginated[paginated.length - 1]?.id || null : null;
+  const nextCursor = hasMore
+    ? paginated[paginated.length - 1]?.id || null
+    : null;
 
   return { comments: paginated, nextCursor, hasMore };
 }
 
-export function addComment(postId: string, text: string, authorId = 'author_1'): Comment {
+export function addComment(
+  postId: string,
+  text: string,
+  authorId = 'author_1',
+): Comment {
   const author = authors.find((a) => a.id === authorId) || authors[0];
-  const newComment: Comment = {
+  const newComment = {
     id: `comment_${comments.length + 1}`,
     postId,
     author,
@@ -151,17 +168,20 @@ export function addComment(postId: string, text: string, authorId = 'author_1'):
     createdAt: new Date().toISOString(),
   };
 
-  comments.push(newComment);
+  (comments as any).push(newComment);
 
   const post = posts.find((p) => p.id === postId);
   if (post) {
     post.commentsCount++;
   }
 
-  return newComment;
+  return newComment as any;
 }
 
-export function toggleLike(postId: string, userId: string): { isLiked: boolean; likesCount: number } {
+export function toggleLike(
+  postId: string,
+  userId: string,
+): { isLiked: boolean; likesCount: number } {
   if (!likeState[userId]) {
     likeState[userId] = {};
   }
