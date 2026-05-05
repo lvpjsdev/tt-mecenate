@@ -78,6 +78,55 @@ npm run android
 npm run web
 ```
 
+## Development with Mock Server
+
+The project includes a local mock server in `mock-server/` directory that fully implements the Mecenate Test API.
+
+### Quick Start
+
+```bash
+# Terminal 1: Start mock server
+npm run mock-server
+
+# Terminal 2: Start Expo (in another terminal)
+npm start
+```
+
+Or use the convenience script to run both concurrently:
+
+```bash
+npm run dev:mock
+```
+
+### Mock Server Features
+
+- ✅ Full REST API implementation (matches OpenAPI spec)
+- ✅ WebSocket events: `ping` (every 30s), `like_updated` (1-3s delay), `comment_added`
+- ✅ In-memory storage with test data (25 posts, comments)
+- ✅ Error simulation (`?simulate_error=true` → 500, invalid UUID → 401, not found → 404)
+- ✅ Pagination (`cursor`, `limit`) and filtering (`tier=free|paid`)
+
+### Environment Configuration
+
+Create `.env.local` from `.env.example` and uncomment mock server settings:
+
+```env
+# For mock server (local development)
+EXPO_PUBLIC_API_URL=http://localhost:3000/test-app
+EXPO_PUBLIC_WS_URL=ws://localhost:3000/test-app/ws
+EXPO_PUBLIC_API_TOKEN=550e8400-e29b-41d4-a716-446655440000
+```
+
+Or use production API:
+
+```env
+# For production API
+EXPO_PUBLIC_API_URL=https://k8s.mectest.ru/test-app
+EXPO_PUBLIC_WS_URL=wss://k8s.mectest.ru/test-app/ws
+```
+
+See [mock-server/README.md](mock-server/README.md) for full documentation.
+
 ## Environment Variables
 
 Copy `.env.example` to `.env.local` and configure:

@@ -7,6 +7,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
+    "mock-server": "cd mock-server && npm run dev",
+    "dev:mock": "concurrently \"npm run mock-server\" \"expo start\"",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",

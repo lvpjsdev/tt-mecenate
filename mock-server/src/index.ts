@@ -237,6 +237,8 @@ app.post('/test-app/posts/:id/comments', authMiddleware, async (c) => {
 
 // Настройка сервера
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const apiUrl = process.env.EXPO_PUBLIC_API_URL || `http://localhost:${port}/test-app`;
+const wsUrl = process.env.EXPO_PUBLIC_WS_URL || `ws://localhost:${port}/test-app/ws`;
 
 // Запускаем Hono сервер и получаем доступ к HTTP серверу
 const server = serve({
@@ -244,10 +246,8 @@ const server = serve({
   port,
 }, (info) => {
   console.log(`Mock server running on http://localhost:${info.port}`);
-  console.log(`REST API: http://localhost:${info.port}/test-app/posts`);
-  console.log(
-    `WS endpoint: ws://localhost:${info.port}/test-app/ws?token=YOUR_UUID`,
-  );
+  console.log(`REST API: ${apiUrl}`);
+  console.log(`WS endpoint: ${wsUrl}?token=YOUR_UUID`);
 });
 
 // Настройка WebSocket сервера на том же HTTP сервере
